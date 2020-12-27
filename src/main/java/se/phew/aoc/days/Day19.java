@@ -18,9 +18,9 @@ public class Day19 extends Challenge {
                 String[] split = line.split(": ");
                 int i = Integer.parseInt(split[0]);
                 if (split[1].contains("\"")) {
-                    allRules.put(i, new Rule(i, split[1].charAt(1)));
+                    allRules.put(i, new Rule(split[1].charAt(1)));
                 } else {
-                    allRules.put(i, new Rule(i, split[1]));
+                    allRules.put(i, new Rule(split[1]));
                 }
             }
         }
@@ -126,15 +126,12 @@ public class Day19 extends Challenge {
 
         ArrayList<String> rules = new ArrayList<>();
         ArrayList<String> candidates = new ArrayList<>();
-        int id;
 
-        public Rule(int id, char c) {
-            this.id = id;
+        public Rule(char c) {
             this.candidates.add("" + c);
         }
 
-        public Rule(int id, String input) {
-            this.id = id;
+        public Rule(String input) {
             if (input.contains("|")) {
                 this.rules.addAll(Arrays.asList(input.split(" \\| ")));
             } else {
@@ -155,10 +152,8 @@ public class Day19 extends Challenge {
                 String[] ids = rule.split(" ");
                 for (String id : ids) {
                     int i = Integer.parseInt(id);
-                    if (i != this.id) {
-                        if (!allRules.containsKey(i) || !allRules.get(i).isPopulated()) {
-                            return false;
-                        }
+                    if (!allRules.containsKey(i) || !allRules.get(i).isPopulated()) {
+                        return false;
                     }
                 }
             }
