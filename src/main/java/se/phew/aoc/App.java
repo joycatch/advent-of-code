@@ -8,8 +8,8 @@ public class App {
         // PropertyConfigurator.configure("log4j.properties");
 
         new Day1();
-        /*new Day2();
-        new Day3();
+        new Day2();
+        /*new Day3();
         new Day4();
         new Day5();*/
         //new Day18();

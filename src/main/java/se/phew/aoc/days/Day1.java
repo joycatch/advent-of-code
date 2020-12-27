@@ -7,15 +7,13 @@ public class Day1 extends Challenge {
     public Day1() {
         super();
 
-        HashSet<Integer> set = new HashSet<>();
-        for (String line : lines) {
-            set.add(Integer.parseInt(line));
-        }
+        HashSet<Integer> set = lines.stream().mapToInt(x -> Integer.parseInt(x)).collect(HashSet::new, HashSet::add, HashSet::addAll);
 
         for (int i : set) {
             int pair = 2020 - i;
             if (set.contains(pair)) {
-                System.out.println("Part 1 answer: " + i * pair + " (" + i + " * " + pair + ")");
+                printAnswer(1, i * pair);
+                //  "(" + i + " * " + pair + ")"
                 break;
             }
         }
@@ -26,7 +24,8 @@ public class Day1 extends Challenge {
             for (int j : set) {
                 int temp = remaining - j;
                 if (set.contains(temp)) {
-                    System.out.println("Part 2 answer: " + i * j * temp + " (" + i + " * " + j + " * " + temp + ")");
+                    printAnswer(2, i * j * temp);
+                    // "(" + i + " * " + j + " * " + temp + ")"
                     break loop;
                 }
             }

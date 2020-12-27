@@ -11,23 +11,30 @@ public class Challenge {
 
     protected List<String> lines;
 
+    protected String className;
+
     public Challenge() {
         this(false);
     }
 
     public Challenge(boolean test) {
 
-        String fileName = this.getClass().getSimpleName();
-
+        className = this.getClass().getSimpleName();
         System.out.println("[INFO] ------------------------------------------------------------------------");
-        System.out.println("[INFO] RUNNING: " + fileName);
-        System.out.println("[INFO] ------------------------------------------------------------------------\n");
+        System.out.println("[INFO] RUNNING: " + className + (test ? " in test mode" : ""));
+        System.out.println("[INFO] ------------------------------------------------------------------------");
+        System.out.println("[INFO]");
         try {
-            fileName = "2020/" + fileName.replaceAll("Day", "") + (test ? "-test" : "") + ".txt";
+            String fileName = "2020/" + className.replaceAll("Day", "") + (test ? "-test" : "") + ".txt";
             File file = new File(getClass().getClassLoader().getResource(fileName).toURI());
             lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected void printAnswer(int part, Object answer) {
+        System.out.println("[INFO] Part " + part + ": " + answer);
+        System.out.println("[INFO]");
     }
 }
