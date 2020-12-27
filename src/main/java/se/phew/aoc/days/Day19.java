@@ -3,13 +3,15 @@ package se.phew.aoc.days;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Day19 extends Challenge {
 
     HashMap<Integer, Rule> allRules = new HashMap<>();
 
     public Day19() {
-        super();
+        super(false);
 
         for (String line : lines) {
             if (line.contains(":")) {
@@ -23,19 +25,69 @@ public class Day19 extends Challenge {
             }
         }
 
-        do {
-            for (int id : allRules.keySet()) {
-                Rule rule = allRules.get(id);
-                if (!rule.isPopulated()) {
-                    // System.out.println("Trying to populate " + id);
-                    rule.populateCandidates();
-                }
+        populateCandidates();
+
+        int maxLength = 0;
+        for (String line : lines) {
+            if (line.length() > maxLength) {
+                maxLength = line.length();
             }
-        } while (!allRulesPopulated());
+        }
 
-        print("All rules fully populated");
-        print("Let's find those that match now...");
+        print("Length of largest message: " + maxLength);
 
+        printAnswer(1, countValidMessages());
+
+        // Rule 0: 8 11
+        // Rule 0: (42 | 42 8) (42 31 | 42 11 31)
+
+        // 42 42 31
+        // 42 42 42 31
+        // 42 42 42 ... 31
+        // 42 42 42 42 42 42 42 42 42 42 31
+        // 42 42 31
+        // 42 42 42 31 31
+        // 42 42 42 42 31 31 31
+        // 42 42 42 42 42 31 31 31 31
+        // 42 42 42 42 42 42 31 31 31 31 31
+
+        String r42 = generateRegexp(allRules.get(42));
+        String r31 = generateRegexp(allRules.get(31));
+
+        int count = 0;
+        count += countMatchingRegexp("^"+ r42 + "{2,11}" + r31 + "{1}$");
+        count += countMatchingRegexp("^"+ r42 + "{3,}" + r31 + "{2}$");
+        count += countMatchingRegexp("^"+ r42 + "{4,}" + r31 + "{3}$");
+        count += countMatchingRegexp("^"+ r42 + "{5,}" + r31 + "{4}$");
+        count += countMatchingRegexp("^"+ r42 + "{6,}" + r31 + "{5}$");
+
+        printAnswer(2, count);
+    }
+
+    private int countMatchingRegexp(String regexp) {
+        // System.out.println(regexp);
+        Pattern pattern = Pattern.compile(regexp);
+        int count = 0;
+        for (String line : lines) {
+            Matcher matcher = pattern.matcher(line);
+            if (matcher.matches()) {
+                count++;
+                // System.out.println(matcher.group());
+            }
+        }
+        return count;
+    }
+
+    private String generateRegexp(Rule rule) {
+        String result = "(";
+        for (String c : rule.candidates) {
+            result += "" + c + "|";
+        }
+        result = result.substring(0, result.length() - 1) + ")";
+        return result;
+    }
+
+    private int countValidMessages() {
         int count = 0;
         for (String line : lines) {
             if (!line.contains(":") && !line.isEmpty()) {
@@ -45,7 +97,20 @@ public class Day19 extends Challenge {
                 }
             }
         }
-        printAnswer(1, count);
+        return count;
+    }
+
+    private void populateCandidates() {
+        do {
+            for (int id : allRules.keySet()) {
+                Rule rule = allRules.get(id);
+                if (!rule.isPopulated()) {
+                    // System.out.println("Trying to populate " + id);
+                    rule.populateCandidates();
+                }
+            }
+        } while (!allRulesPopulated());
+        print("All rules fully populated");
     }
 
     public boolean allRulesPopulated() {
@@ -75,7 +140,6 @@ public class Day19 extends Challenge {
             } else {
                 this.rules.add(input);
             }
-            populateCandidates();
         }
 
         public boolean isValidMessage(String input) {
@@ -91,8 +155,10 @@ public class Day19 extends Challenge {
                 String[] ids = rule.split(" ");
                 for (String id : ids) {
                     int i = Integer.parseInt(id);
-                    if (!allRules.containsKey(i) || !allRules.get(i).isPopulated()) {
-                        return false;
+                    if (i != this.id) {
+                        if (!allRules.containsKey(i) || !allRules.get(i).isPopulated()) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -117,7 +183,8 @@ public class Day19 extends Challenge {
                     if (test.size() == 2) {
                         Rule rule2 = test.get(1);
                         for (String c1 : rule1.candidates) {
-                            for (String c2 : rule2.candidates) {
+                            ArrayList<String> tempCandidates = (ArrayList<String>) rule2.candidates.clone();
+                            for (String c2 : tempCandidates) {
                                 candidates.add(c1 + c2);
                             }
                         }
@@ -135,10 +202,6 @@ public class Day19 extends Challenge {
                     }
                 }
             }
-        }
-
-        public void removeCandidates() {
-            this.candidates = new ArrayList<>();
         }
     }
 }
