@@ -37,4 +37,9 @@ public class Challenge {
         System.out.println("[INFO] Part " + part + ": " + answer);
         System.out.println("[INFO]");
     }
+
+    protected void print(String info) {
+        System.out.println("[INFO] " + info);
+        System.out.println("[INFO]");
+    }
 }

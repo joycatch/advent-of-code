@@ -9,7 +9,7 @@ public class Day19 extends Challenge {
     HashMap<Integer, Rule> allRules = new HashMap<>();
 
     public Day19() {
-        super(false);
+        super();
 
         for (String line : lines) {
             if (line.contains(":")) {
@@ -27,33 +27,14 @@ public class Day19 extends Challenge {
             for (int id : allRules.keySet()) {
                 Rule rule = allRules.get(id);
                 if (!rule.isPopulated()) {
-                    System.out.println("Trying to populate " + id);
+                    // System.out.println("Trying to populate " + id);
                     rule.populateCandidates();
                 }
             }
         } while (!allRulesPopulated());
 
-        System.out.println("All rules fully populated");
-
-
-        allRules.put(8, new Rule(8, "42 | 42 8"));
-        allRules.get(0).removeCandidates();
-
-
-        do {
-            for (int id : allRules.keySet()) {
-                Rule rule = allRules.get(id);
-                if (!rule.isPopulated()) {
-                    System.out.println("Trying to populate 2 - " + id);
-                    rule.populateCandidates();
-                }
-            }
-        } while (!allRulesPopulated());
-
-        System.out.println("All rules fully populated 2");
-
-
-        // Let's find those that match
+        print("All rules fully populated");
+        print("Let's find those that match now...");
 
         int count = 0;
         for (String line : lines) {
@@ -64,7 +45,7 @@ public class Day19 extends Challenge {
                 }
             }
         }
-        System.out.println("Matching: " + count);
+        printAnswer(1, count);
     }
 
     public boolean allRulesPopulated() {
@@ -80,7 +61,7 @@ public class Day19 extends Challenge {
 
         ArrayList<String> rules = new ArrayList<>();
         ArrayList<String> candidates = new ArrayList<>();
-        int id = -1;
+        int id;
 
         public Rule(int id, char c) {
             this.id = id;
