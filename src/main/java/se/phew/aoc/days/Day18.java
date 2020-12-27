@@ -12,26 +12,24 @@ import java.util.regex.Pattern;
 
 public class Day18 extends Challenge {
     ScriptEngineManager mgr = new ScriptEngineManager();
-    ScriptEngine engine;
+    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+
+    boolean printEachLine = false;
 
     public Day18() {
         super();
 
-        engine = mgr.getEngineByName("JavaScript");
+        printAnswer(1, runPart(1));
+        printAnswer(2, runPart(2));
+    }
 
-        /*
-        lines = new ArrayList<>();
-        lines.add("1 + 2 * 3 + 4 * 5 + 6");
-        lines.add("1 + (2 * 3) + (4 * (5 + 6))");
-        lines.add("2 * 3 + (4 * 5)");
-        lines.add("5 + (8 * 3 + 9 + 3 * 4 * 3)");
-        lines.add("5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))");
-        lines.add("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2");
-         */
-
+    private long runPart(int part) {
         long sum = 0;
-        for (String line : lines) {
-            System.out.print(line);
+        for (String originalLine : lines) {
+            String line = originalLine;
+            if (printEachLine) {
+                System.out.print(line);
+            }
             do {
                 String[] splits = line.split("\\(|\\)");
                 for (String split : splits) {
@@ -39,7 +37,7 @@ public class Day18 extends Challenge {
                     Pattern pattern = Pattern.compile(patternString);
                     Matcher matcher = pattern.matcher(split);
                     if (matcher.matches()) {
-                        String temp = "" + evaluatePart2(split);
+                        String temp = "" + (part == 1 ? evaluatePart1(split) : evaluatePart2(split));
                         split = split.replaceAll("\\*", "\\\\\\*");
                         split = split.replaceAll("\\+", "\\\\\\+");
                         line = line.replaceAll("\\(" + split + "\\)", temp);
@@ -47,17 +45,17 @@ public class Day18 extends Challenge {
                 }
             } while (line.contains("("));
 
-            Object evaluate = evaluatePart2(line);
+            Object evaluate = (part == 1 ? evaluatePart1(line) : evaluatePart2(line));
             if (evaluate instanceof Double) {
                 sum += Double.parseDouble(evaluate.toString());
             } else if (evaluate instanceof Integer) {
-                System.out.println(" : " + (int) evaluate);
+                sum += (int) evaluate;
             }
-            // System.out.println(sum);
+            if (printEachLine) {
+                System.out.println(" = " + evaluate.toString());
+            }
         }
-
-        System.out.println("Sum: " + sum);
-
+        return sum;
     }
 
     private Object evaluatePart1(String input) {
