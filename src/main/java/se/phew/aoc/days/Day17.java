@@ -7,26 +7,28 @@ public class Day17 extends Challenge {
     int zSize;
 
     public Day17() {
-        super(true);
+        super();
 
-        xSize = lines.get(0).length() + 10; // Final size of
-        ySize = lines.size() + 10;
+        xSize = lines.get(0).length() + 20;
+        ySize = lines.size() + 20;
         zSize = 13;
+
+        int cycles = 6;
 
         int[][][] world = new int[xSize][ySize][zSize];
 
         for (int y = 0; y < lines.size(); y++) {
             for (int x = 0; x < lines.get(0).length(); x++) {
                 if (lines.get(y).charAt(x) == '#') {
-                    world[x + 5][y + 5][6] = 1;
+                    world[x + 10][y + 10][6] = 1;
                 }
             }
         }
 
         printWorld(world);
 
-        for (int cycles = 1; cycles < 6; cycles++) {
-            System.out.println("After " + cycles + " cycle:\n");
+        for (int c = 0; c < cycles; c++) {
+            System.out.println("After " + (c + 1) + " cycle:\n");
             int[][][] currentState = copy(world);
             runCycle(currentState, world);
             printWorld(world);
@@ -108,21 +110,24 @@ public class Day17 extends Challenge {
         int yStart = Math.max(yTest - 1, 0);
         int zStart = Math.max(zTest - 1, 0);
 
-        int xStop = Math.min(xTest + 1, xSize);
-        int yStop = Math.min(yTest + 1, ySize);
-        int zStop = Math.min(zTest + 1, zSize);
+        int xStop = Math.min(xTest + 1, xSize - 1);
+        int yStop = Math.min(yTest + 1, ySize - 1);
+        int zStop = Math.min(zTest + 1, zSize - 1);
         int count = 0;
 
-        for (int x = xStart; x < xStop; x++) {
-            for (int y = yStart; y < yStop; y++) {
-                for (int z = zStart; z < zStop; z++) {
-                    if (!(x == xTest && y == yTest && z == zTest)) {
+        for (int z = zStart; z <= zStop; z++) {
+            for (int x = xStart; x <= xStop; x++) {
+                for (int y = yStart; y <= yStop; y++) {
+                    // if (!(x == xTest && y == yTest && z == zTest)) {
                         if (active(x, y, z, currentState)) {
                             count++;
                         }
-                    }
+                    // }
                 }
             }
+        }
+        if (active(xTest, yTest, zTest, currentState) && count > 0) {
+            count--;
         }
         return count;
     }
