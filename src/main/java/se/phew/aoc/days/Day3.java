@@ -27,7 +27,6 @@ public class Day3 extends Challenge {
         System.out.println("Total count: " + trees);
     }
 
-
     /*
 
     Right 1, down 1: 79
@@ -39,5 +38,4 @@ public class Day3 extends Challenge {
     Answer: 6708199680
 
      */
-
 }

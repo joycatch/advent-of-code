@@ -7,8 +7,8 @@ public class App {
     public static void main(String[] args) {
         // PropertyConfigurator.configure("log4j.properties");
 
-        // new Day1();
-        // new Day2();
+        new Day1();
+        new Day2();
         // new Day3();
         // new Day4();
         // new Day5();
@@ -16,7 +16,7 @@ public class App {
         new Day7();
         new Day8();
         // new Day9();
-        // new Day10();
+        new Day10();
         // new Day11();
         // new Day12();
         // new Day13();
