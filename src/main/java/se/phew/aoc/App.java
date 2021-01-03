@@ -13,7 +13,8 @@ public class App {
         new Day4();
         new Day5();*/
         // new Day14();
-        new Day17();
+        new Day10();
+        //new Day17();
         // new Day18();
         // new Day19();
         //new Day21();
