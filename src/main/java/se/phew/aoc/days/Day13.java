@@ -32,13 +32,14 @@ public class Day13 extends Challenge {
 
         // Part 2
         List<Long> busses = new ArrayList<>(map.keySet());
-        long N = busses.stream().reduce(1L, (a, b) -> a * b);
         int size = busses.size();
+        long N = busses.stream().reduce(1L, (a, b) -> a * b);
         long b[] = new long[size];
         long n[] = new long[size];
         long x[] = new long[size];
         long bnx[] = new long[size];
         long sum = 0;
+
         for (int i = 0; i < size; i++) {
             b[i] = map.get(busses.get(i));
             n[i] = N / busses.get(i);
