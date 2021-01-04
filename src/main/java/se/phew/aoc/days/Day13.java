@@ -33,13 +33,13 @@ public class Day13 extends Challenge {
         // Part 2
         List<Long> busses = new ArrayList<>(map.keySet());
         long N = busses.stream().reduce(1L, (a, b) -> a * b);
-        long b[] = new long[busses.size()];
-        long n[] = new long[busses.size()];
-        long x[] = new long[busses.size()];
-        long bnx[] = new long[busses.size()];
-
+        int size = busses.size();
+        long b[] = new long[size];
+        long n[] = new long[size];
+        long x[] = new long[size];
+        long bnx[] = new long[size];
         long sum = 0;
-        for (int i = 0; i < busses.size(); i++) {
+        for (int i = 0; i < size; i++) {
             b[i] = map.get(busses.get(i));
             n[i] = N / busses.get(i);
             x[i] = findModularInverse(n[i], busses.get(i));
@@ -63,7 +63,7 @@ public class Day13 extends Challenge {
         return 1;
     }
 
-    private boolean allBussesDepartureAtTheCorrectTime(long t, HashMap<Long, Integer> map) {
+    public boolean allBussesDepartureAtTheCorrectTime(long t, HashMap<Long, Integer> map) {
         for (long id : map.keySet()) {
             if ((t + map.get(id)) % id != 0) {
                 return false;
