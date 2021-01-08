@@ -1,31 +1,23 @@
 package se.phew.aoc.days;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Day22 extends Challenge {
 
+    int game = 1;
+
     public Day22() {
         super();
 
-        // Part 1
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");
 
-        Player player = p1;
-        for (String line : lines) {
-            if (line.startsWith(p1.name)) {
-                player = p1;
-            } else if (line.startsWith(p2.name)) {
-                player = p2;
-            } else {
-                if (!line.isEmpty()) {
-                    player.addCardToDeck(Integer.parseInt(line));
-                }
-            }
-        }
+        populateDecks(p1, p2);
 
+        // Part 1
         do {
             int p1card = p1.playCard();
             int p2card = p2.playCard();
@@ -35,19 +27,71 @@ public class Day22 extends Challenge {
             } else {
                 p2.addToBottom(p2card, p1card);
             }
-        } while ( p1.deckIsNotEmpty() && p2.deckIsNotEmpty());
+        } while ( !p1.isEmpty() && !p2.isEmpty());
 
-        p1.printDeck();
-        p2.printDeck();
-
-        int p1score = p1.calculateScore();
-        int p2score = p2.calculateScore();
-        int result = Math.max(p1score, p2score);
-        printAnswer(1, result);
+        // p1.printDeck();
+        // p2.printDeck();
+        printAnswer(1, Math.max(p1.calculateScore(), p2.calculateScore()));
 
         // Part 2
+        populateDecks(p1, p2);
+        playGame(game, p1, p2);
 
-        // TBD
+        // p1.printDeck();
+        // p2.printDeck();
+        printAnswer(2, Math.max(p1.calculateScore(), p2.calculateScore()));
+    }
+
+    private void populateDecks(Player player1, Player player2) {
+        Player player = player1;
+        for (String line : lines) {
+            if (line.startsWith(player1.name)) {
+                player = player1;
+            } else if (line.startsWith(player2.name)) {
+                player = player2;
+            } else {
+                if (!line.isEmpty()) {
+                    player.addCardToDeck(Integer.parseInt(line));
+                }
+            }
+        }
+    }
+
+    private int playGame(int gameId, Player p1, Player p2) {
+        int roundId = 1;
+        HashSet<String> previousRounds = new HashSet<>();
+        do {
+            String uniqueRoundId = p2.toString() + p2.toString();
+            if (!previousRounds.contains(uniqueRoundId)) {
+                previousRounds.add(uniqueRoundId);
+
+                int p1card = p1.playCard();
+                int p2card = p2.playCard();
+
+                if (p1.canPlaySubGame(p1card) && p2.canPlaySubGame(p2card)) {
+                    Player newPlayer1 = new Player(p1, p1card);
+                    Player newPlayer2 = new Player(p2, p2card);
+                    int winner = playGame(++game, newPlayer1, newPlayer2);
+                    if (winner == 1) {
+                        p1.addToBottom(p1card, p2card);
+                    } else {
+                        p2.addToBottom(p2card, p1card);
+                    }
+                } else {
+                    if (p1card > p2card) {
+                        p1.addToBottom(p1card, p2card);
+                    } else {
+                        p2.addToBottom(p2card, p1card);
+                    }
+                }
+            } else {
+                return 1;
+            }
+
+            roundId++;
+        } while ( !p1.isEmpty() && !p2.isEmpty());
+
+        return p1.isEmpty() ? 2 : 1;
     }
 
     private class Player {
@@ -58,6 +102,11 @@ public class Day22 extends Challenge {
             this.name = name;
         }
 
+        public Player(Player player, int cards) {
+            this.name = player.name;
+            this.deck.addAll(player.deck.stream().limit(cards).collect(Collectors.toList()));
+        }
+
         public void addCardToDeck(int card) {
             deck.add(card);
         }
@@ -66,18 +115,17 @@ public class Day22 extends Challenge {
             return deck.poll();
         }
 
+        public boolean canPlaySubGame(int card) {
+            return deck.size() >= card;
+        }
+
         public void addToBottom(int winningCard, int losingCard) {
             deck.add(winningCard);
             deck.add(losingCard);
         }
 
-        public boolean deckIsNotEmpty() {
-            return deck.size() > 0;
-        }
-
-        public void printDeck() {
-            String result = deck.stream().map(a -> String.valueOf(a)).collect(Collectors.joining(","));
-            print(name + "'s deck: " + result);
+        public boolean isEmpty() {
+            return deck.size() == 0;
         }
 
         public int calculateScore() {
@@ -87,6 +135,15 @@ public class Day22 extends Challenge {
                 result += i*deck.poll();
             }
             return result;
+        }
+
+        public void printDeck() {
+            String result = deck.stream().map(a -> String.valueOf(a)).collect(Collectors.joining(","));
+            System.out.println(name + "'s deck: " + result);
+        }
+
+        public String toString() {
+            return deck.toString();
         }
     }
 }
