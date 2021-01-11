@@ -40,14 +40,13 @@ public class Day20 extends Challenge {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
                 int monsters = findMonsters(needle);
-                int remove = monsters * 15;
                 if (monsters > 0) {
-                    answer = countImageHashes(newImage) - remove;
+                    answer = countImageHashes(newImage) - monsters * 15;
                     break outerloop;
                 }
-                rotates(newImage);
+                rotate(newImage);
             }
-            flips(newImage);
+            flip(newImage);
         }
 
         printAnswer(2, answer);
@@ -137,7 +136,6 @@ public class Day20 extends Challenge {
         // printImage(image, 10);
         // System.out.println("\n\n");
         // printImage(newImage, 8);
-
     }
 
     private void printImage(char[][] image, int divider) {
@@ -230,8 +228,7 @@ public class Day20 extends Challenge {
     }
 
     private Tile getMatchingTile(int borderId, long notThisTileId) {
-        Tile tile = borderIdToTileMap.get(borderId).stream().filter(a -> a.id != notThisTileId).findAny().get();
-        return tile;
+        return borderIdToTileMap.get(borderId).stream().filter(a -> a.id != notThisTileId).findAny().get();
     }
 
     private void adjustRotation(Tile tile, int top, int right, int bottom, int left) {
@@ -247,7 +244,6 @@ public class Day20 extends Challenge {
             }
             tile.flip();
         }
-        System.out.println("OMG NEVER FOUND HERE EITHER");
     }
 
     private void readInputAndPopulateTiles() {
@@ -273,8 +269,7 @@ public class Day20 extends Challenge {
         newImage = new char[gridSize * (Tile.SIZE - 2)][gridSize * (Tile.SIZE - 2)];
     }
 
-
-    void flips(char[][] map) {
+    static void flip(char[][] map) {
         for (int y = 0; y < map.length; y++) {
             char[] temp = map[y].clone();
             for (int x = 0; x < map.length; x++) {
@@ -283,7 +278,7 @@ public class Day20 extends Challenge {
         }
     }
 
-    void rotates(char[][] map) {
+    static void rotate(char[][] map) {
         for (int i = 0; i < map.length / 2; i++) {
             for (int j = i; j < map.length - i - 1; j++) {
                 char temp = map[i][j];
@@ -306,24 +301,11 @@ public class Day20 extends Challenge {
         }
 
         void flip() {
-            for (int y = 0; y < SIZE; y++) {
-                char[] temp = map[y].clone();
-                for (int x = 0; x < SIZE; x++) {
-                    map[y][x] = temp[SIZE - 1 - x];
-                }
-            }
+            Day20.flip(map);
         }
 
         void rotate() {
-            for (int i = 0; i < SIZE / 2; i++) {
-                for (int j = i; j < SIZE - i - 1; j++) {
-                    char temp = map[i][j];
-                    map[i][j] = map[SIZE - 1 - j][i];
-                    map[SIZE - 1 - j][i] = map[SIZE - 1 - i][SIZE - 1 - j];
-                    map[SIZE - 1 - i][SIZE - 1 - j] = map[j][SIZE - 1 - i];
-                    map[j][SIZE - 1 - i] = temp;
-                }
-            }
+            Day20.rotate(map);
         }
 
         void print() {
