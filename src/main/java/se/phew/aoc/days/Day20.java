@@ -12,7 +12,7 @@ public class Day20 extends Challenge {
     HashMap<Integer, ArrayList<Tile>> borderIdToTileMap = new HashMap<>();
     Tile[][] imageTiles;
     char[][] image;
-    char[][] newImage;
+    char[][] imageWithoutBorders;
     int gridSize;
 
     public Day20() {
@@ -41,40 +41,38 @@ public class Day20 extends Challenge {
             for (int j = 0; j < 4; j++) {
                 int monsters = findMonsters(needle);
                 if (monsters > 0) {
-                    answer = countImageHashes(newImage) - monsters * 15;
+                    answer = calculateWaterRoughness(imageWithoutBorders, monsters * 15);
                     break outerloop;
                 }
-                rotate(newImage);
+                rotate(imageWithoutBorders);
             }
-            flip(newImage);
+            flip(imageWithoutBorders);
         }
 
         printAnswer(2, answer);
     }
 
-    private int countImageHashes(char[][] newImage) {
+    private int calculateWaterRoughness(char[][] image, int removeFromCount) {
         int count = 0;
-        for (int y = 0; y < newImage.length; y++) {
-            for (int x = 0; x < newImage[0].length; x++) {
-                if (newImage[y][x] == '1') {
+        for (int y = 0; y < image.length; y++) {
+            for (int x = 0; x < image[0].length; x++) {
+                if (image[y][x] == '1') {
                     count++;
                 }
             }
         }
-        return count;
+        return count - removeFromCount;
     }
 
     private int findMonsters(char[][] needle) {
         int count = 0;
-        for (int y = 0; y < newImage.length - needle.length; y++) {
-            for (int x = 0; x < newImage[0].length - needle[0].length; x++) {
+        for (int y = 0; y < imageWithoutBorders.length - needle.length; y++) {
+            for (int x = 0; x < imageWithoutBorders[0].length - needle[0].length; x++) {
                 boolean foundMonster = true;
                 for (int iy = 0; iy < needle.length; iy++) {
                     for (int ix = 0; ix < needle[iy].length; ix++) {
-                        if (needle[iy][ix] == '#') {
-                            if (newImage[y + iy][x + ix] != '1') {
-                                foundMonster = false;
-                            }
+                        if (needle[iy][ix] == '#' && imageWithoutBorders[y + iy][x + ix] != '1') {
+                            foundMonster = false;
                         }
                     }
                 }
@@ -127,15 +125,14 @@ public class Day20 extends Challenge {
                 }
                 for (int iy = 0; iy < Tile.SIZE - 2; iy++) {
                     for (int ix = 0; ix < Tile.SIZE - 2; ix++) {
-                        newImage[y * (Tile.SIZE - 2) + iy][x * (Tile.SIZE - 2) + ix] = imageTiles[y][x].map[iy + 1][ix + 1];
+                        imageWithoutBorders[y * (Tile.SIZE - 2) + iy][x * (Tile.SIZE - 2) + ix] = imageTiles[y][x].map[iy + 1][ix + 1];
                     }
                 }
             }
         }
 
         // printImage(image, 10);
-        // System.out.println("\n\n");
-        // printImage(newImage, 8);
+        // printImage(imageWithoutBorders, 8);
     }
 
     private void printImage(char[][] image, int divider) {
@@ -152,6 +149,7 @@ public class Day20 extends Challenge {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     private void alignRight(Tile tile, int borderId) {
@@ -164,7 +162,6 @@ public class Day20 extends Challenge {
             }
             tile.flip();
         }
-        System.out.println("Could not find correct orientiation for " + tile.id);
     }
 
     private void alignTop(Tile tile, int borderId) {
@@ -193,7 +190,6 @@ public class Day20 extends Challenge {
 
     private List<Tile> getCorners() {
         ArrayList<Tile> result = new ArrayList<>();
-
         HashMap<Long, Integer> tileCount = new HashMap<>();
 
         for (Tile tile : tileMap.values()) {
@@ -266,7 +262,7 @@ public class Day20 extends Challenge {
         gridSize = (int) Math.sqrt(tileMap.size());
         imageTiles = new Tile[gridSize][gridSize];
         image = new char[gridSize * Tile.SIZE][gridSize * Tile.SIZE];
-        newImage = new char[gridSize * (Tile.SIZE - 2)][gridSize * (Tile.SIZE - 2)];
+        imageWithoutBorders = new char[gridSize * (Tile.SIZE - 2)][gridSize * (Tile.SIZE - 2)];
     }
 
     static void flip(char[][] map) {
