@@ -97,22 +97,13 @@ public class Day20 extends Challenge {
             imageTiles[y][0] = another;
         }
 
-        // Arrange first row
+        // Arrange from left to right
         for (int x = 1; x < gridSize; x++) {
-            Tile previous = imageTiles[0][x - 1];
-            Tile another = getMatchingTile(previous.right(), previous.id);
-            alignRight(another, previous.right());
-            imageTiles[0][x] = another;
-        }
-
-        for (int y = 1; y < gridSize; y++) {
-            for (int x = 1; x < gridSize; x++) {
-                Tile above = imageTiles[y - 1][x];
-                Tile left = imageTiles[y][x - 1];
-
-                Tile current = getMatchingTile(left.right(), left.id);
-                adjustRotation(current, above.bottom(), left.right());
-                imageTiles[y][x] = current;
+            for (int y = 0; y < gridSize; y++) {
+                Tile previous = imageTiles[y][x - 1];
+                Tile another = getMatchingTile(previous.right(), previous.id);
+                alignRight(another, previous.right());
+                imageTiles[y][x] = another;
             }
         }
 
@@ -173,18 +164,6 @@ public class Day20 extends Challenge {
                 tile.rotate();
             }
             tile.flip();
-        }
-    }
-
-    private void adjustRotation(Tile current, int bottom, int right) {
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (current.top() == bottom && current.left() == right) {
-                    return;
-                }
-                current.rotate();
-            }
-            current.flip();
         }
     }
 
