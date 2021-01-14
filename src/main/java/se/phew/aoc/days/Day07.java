@@ -2,9 +2,9 @@ package se.phew.aoc.days;
 
 import java.util.HashMap;
 
-public class Day7 extends Challenge {
+public class Day07 extends Challenge {
 
-    public Day7() {
+    public Day07() {
         super();
 
         HashMap<String, Bag> allBags = new HashMap<>();

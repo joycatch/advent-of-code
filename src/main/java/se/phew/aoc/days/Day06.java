@@ -2,9 +2,9 @@ package se.phew.aoc.days;
 
 import java.util.HashMap;
 
-public class Day6 extends Challenge {
+public class Day06 extends Challenge {
 
-    public Day6() {
+    public Day06() {
         super();
 
         GroupVotes groupVotes = new GroupVotes();

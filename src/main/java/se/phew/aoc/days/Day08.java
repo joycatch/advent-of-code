@@ -1,11 +1,11 @@
 package se.phew.aoc.days;
 
-public class Day8 extends Challenge {
+public class Day08 extends Challenge {
 
     private int accumulator = 0;
     private int part1 = 0;
 
-    public Day8() {
+    public Day08() {
         super();
         Instruction[] instructions = new Instruction[lines.size()];
 

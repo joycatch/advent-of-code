@@ -23,7 +23,8 @@ public class Challenge {
         System.out.println("[INFO] ------------------------------------------------------------------------");
         System.out.println("[INFO]");
         try {
-            String fileName = "2020/" + className.replaceAll("Day", "") + (isTest ? "-test" : "") + ".txt";
+            String day = className.replaceAll("Day(0)*", "");
+            String fileName = "2020/" + day + (isTest ? "-test" : "") + ".txt";
             File file = new File(getClass().getClassLoader().getResource(fileName).toURI());
             lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         } catch (Exception e) {

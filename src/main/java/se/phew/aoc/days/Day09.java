@@ -2,9 +2,9 @@ package se.phew.aoc.days;
 
 import java.util.*;
 
-public class Day9 extends Challenge {
+public class Day09 extends Challenge {
 
-    public Day9() {
+    public Day09() {
         super();
 
         long[] values = new long[lines.size()];
