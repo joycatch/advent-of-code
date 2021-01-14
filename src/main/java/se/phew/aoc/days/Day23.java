@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Day23 extends Challenge {
 
     ArrayList<Integer> list;
-    String input;
     int listSize;
 
     public Day23() {
@@ -72,7 +71,7 @@ public class Day23 extends Challenge {
 
     private String populateList(boolean part2) {
         list = new ArrayList<>();
-        input = "156794823";
+        String input = "156794823";
         if (isTest) {
             input = "389125467";
         }

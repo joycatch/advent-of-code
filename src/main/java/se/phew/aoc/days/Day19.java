@@ -34,7 +34,7 @@ public class Day19 extends Challenge {
             }
         }
 
-        print("Length of largest message: " + maxLength);
+        // print("Length of largest message: " + maxLength);
 
         printAnswer(1, countValidMessages());
 

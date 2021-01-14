@@ -19,13 +19,13 @@ public class Day17 extends Challenge {
 
         int[][][][] world = populateWorld();
 
-        printWorld(6, world);
+        // printWorld(6, world);
 
         for (int c = 0; c < cycles; c++) {
-            System.out.println("After " + (c + 1) + " cycle:\n");
+            // System.out.println("After " + (c + 1) + " cycle:\n");
             int[][][][] currentState = copy(world);
             runCycleIn3d(6, currentState, world);
-            printWorld(6, world);
+            // printWorld(6, world);
         }
 
         printAnswer(1, countActives(world));

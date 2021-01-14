@@ -49,7 +49,7 @@ public class Day13 extends Challenge {
         }
         long t = Math.abs(N - (sum % N));
 
-        print("All busses depart on time? " + allBussesDepartureAtTheCorrectTime(t, map));
+        // print("All busses depart on time? " + allBussesDepartureAtTheCorrectTime(t, map));
 
         printAnswer(2, t);
     }
