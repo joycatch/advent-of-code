@@ -1,75 +1,90 @@
 package se.phew.aoc.days;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 public class Day23 extends Challenge {
+
+    ArrayList<Integer> list;
+    String input;
+    int listSize;
 
     public Day23() {
         super();
 
-        String input = "156794823";
+        // Part 1
+        populateList(false);
+
+        int[] linkedList = playGame(100);
+
+        String answer = "";
+        int next = linkedList[1], i = 0;
+        do {
+            answer += "" + next;
+            next = linkedList[next];
+        }  while (next != 1);
+
+        printAnswer(1, answer);
+
+        // Part 2
+        populateList(true);
+
+        linkedList = playGame(10000000);
+
+        next = linkedList[1];
+
+        printAnswer(2, (long) next * linkedList[next]);
+    }
+
+    private int[] playGame(int moves) {
+
+        int[] linkedList = new int[list.size() + 1];
+        for (int i = 0; i < list.size() - 1; i++) {
+            linkedList[list.get(i)] = list.get(i + 1);
+        }
+        linkedList[list.get(list.size() - 1)] = list.get(0);
+
+        int[] pickedUp = new int[3];
+        int current = list.get(0);
+
+        for (int move = 1; move <= moves; move++) {
+
+            pickedUp[0] = linkedList[current];
+            pickedUp[1] = linkedList[pickedUp[0]];
+            pickedUp[2] = linkedList[pickedUp[1]];
+
+            int destination = current;
+            do {
+                if (--destination < 1) {
+                    destination = listSize - 1;
+                }
+            } while (destination == pickedUp[0] || destination == pickedUp[1] || destination == pickedUp[2]);
+
+            linkedList[current] = linkedList[pickedUp[2]];
+            int temp = linkedList[destination];
+            linkedList[destination] = pickedUp[0];
+            linkedList[pickedUp[2]] = temp;
+
+            current = linkedList[current];
+        }
+
+        return linkedList;
+    }
+
+    private String populateList(boolean part2) {
+        list = new ArrayList<>();
+        input = "156794823";
         if (isTest) {
             input = "389125467";
         }
-
-        Queue<Integer> list = new LinkedList<>();
         for (char number : input.toCharArray()) {
             list.add(Integer.parseInt("" + number));
         }
-
-        int[] pickedUp = new int[3];
-
-        for (int move = 1; move <= 100; move++) {
-            System.out.println("\n-- move " + move + " --");
-            System.out.print("cups: ");
-            for (int i = 0; i < input.length(); i++) {
-                int n = list.poll();
-                System.out.print((i == 0 ? "(" + n + ")" : n ) + " ");
-                list.add(n);
+        if (part2) {
+            for (int i = 10; i <= 1000000; i++) {
+                list.add(Integer.parseInt("" + i));
             }
-            System.out.print("\npick up: ");
-            int number = list.poll();
-            for (int j = 0; j < 3; j++) {
-                pickedUp[j] = list.poll();
-                System.out.print(pickedUp[j] + ", ");
-            }
-            list.add(number);
-            list = findDestination(list, number);
-            for (int j = 0; j < 3; j++) {
-                list.add(pickedUp[j]);
-            }
-            rotateTo(list, number);
         }
-
-        rotateTo(list, 1);
-        list.remove(1);
-        String answer = "";
-        for (int i : list) {
-            answer += "" + i;
-        }
-
-        print("");
-        printAnswer(1, answer);
-    }
-
-    private Queue<Integer> rotateTo(Queue<Integer> list, int number) {
-        int lastNumber;
-        do {
-            lastNumber = list.poll();
-            list.add(lastNumber);
-        } while (lastNumber != number);
-        return list;
-    }
-
-    private Queue<Integer> findDestination(Queue<Integer> list, int needle) {
-        int min = list.stream().reduce(Integer::min).get();
-        do {
-            if (--needle < min) {
-                needle = list.stream().reduce(Integer::max).get();
-            }
-        } while (!list.contains(needle));
-        System.out.println("\ndestination: " + needle);
-        return rotateTo(list, needle);
+        listSize = list.size() + 1;
+        return input;
     }
 }
