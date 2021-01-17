@@ -1,5 +1,7 @@
 package se.phew.aoc.days;
 
+import se.phew.aoc.App;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,7 +26,7 @@ public class Challenge {
         System.out.println("[INFO]");
         try {
             String day = className.replaceAll("Day(0)*", "");
-            String fileName = "2020/" + day + (isTest ? "-test" : "") + ".txt";
+            String fileName = App.YEAR + "/" + day + (isTest ? "-test" : "") + ".txt";
             File file = new File(getClass().getClassLoader().getResource(fileName).toURI());
             lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         } catch (Exception e) {

@@ -1,4 +1,6 @@
-package se.phew.aoc.days;
+package se.phew.aoc.days.twenty20;
+
+import se.phew.aoc.days.Challenge;
 
 public class Day02 extends Challenge {
 

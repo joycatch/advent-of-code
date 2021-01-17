@@ -1,4 +1,6 @@
-package se.phew.aoc.days;
+package se.phew.aoc.days.twenty20;
+
+import se.phew.aoc.days.Challenge;
 
 import java.util.HashSet;
 import java.util.LinkedList;
