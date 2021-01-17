@@ -2,10 +2,7 @@ package se.phew.aoc.days.twenty15;
 
 import se.phew.aoc.days.Challenge;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Day03 extends Challenge {
 

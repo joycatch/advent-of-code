@@ -2,10 +2,6 @@ package se.phew.aoc.days.twenty15;
 
 import se.phew.aoc.days.Challenge;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-
 public class Day01 extends Challenge {
 
     public Day01() {
