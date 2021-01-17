@@ -1,18 +1,19 @@
 package se.phew.aoc;
 
-import se.phew.aoc.days.twenty15.*;
+// import se.phew.aoc.days.twenty15.*;
+import se.phew.aoc.days.twenty16.*;
 // import se.phew.aoc.days.twenty20.*;
 
 public class App {
 
-    public static final String YEAR = "2015";
+    public static final String YEAR = "2016";
 
     public static void main(String[] args) {
         // PropertyConfigurator.configure("log4j.properties");
 
         new Day01();
-        new Day02();
-        new Day03();
+        //new Day02();
+        //new Day03();
         /* new Day04();
         // new Day05();
         new Day06();
