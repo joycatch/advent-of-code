@@ -26,7 +26,9 @@ public class Challenge {
         System.out.println("[INFO]");
         try {
             String day = className.replaceAll("Day(0)*", "");
-            String fileName = App.YEAR + "/" + day + (isTest ? "-test" : "") + ".txt";
+            String packages = this.getClass().getPackage().getName();
+            String year = "20" + packages.split("\\.")[4].replaceAll("twenty", "");
+            String fileName = year + "/" + day + (isTest ? "-test" : "") + ".txt";
             File file = new File(getClass().getClassLoader().getResource(fileName).toURI());
             lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         } catch (Exception e) {
