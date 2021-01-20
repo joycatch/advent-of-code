@@ -2,9 +2,9 @@ package se.phew.aoc;
 
 // import se.phew.aoc.days.twenty15.*;
 // import se.phew.aoc.days.twenty16.*;
-// import se.phew.aoc.days.twenty17.*;
+import se.phew.aoc.days.twenty17.*;
 // import se.phew.aoc.days.twenty18.*;
-import se.phew.aoc.days.twenty19.*;
+// import se.phew.aoc.days.twenty19.*;
 // import se.phew.aoc.days.twenty20.*;
 
 public class App {
@@ -13,7 +13,7 @@ public class App {
         // PropertyConfigurator.configure("log4j.properties");
 
         new Day01();
-        //new Day02();
+        new Day02();
         //new Day03();
         /* new Day04();
         // new Day05();
