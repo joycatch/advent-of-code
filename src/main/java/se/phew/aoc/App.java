@@ -2,8 +2,8 @@ package se.phew.aoc;
 
 // import se.phew.aoc.days.twenty15.*;
 // import se.phew.aoc.days.twenty16.*;
-import se.phew.aoc.days.twenty17.*;
-// import se.phew.aoc.days.twenty18.*;
+// import se.phew.aoc.days.twenty17.*;
+import se.phew.aoc.days.twenty18.*;
 // import se.phew.aoc.days.twenty19.*;
 // import se.phew.aoc.days.twenty20.*;
 
