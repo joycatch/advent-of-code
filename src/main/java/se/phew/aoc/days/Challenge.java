@@ -23,7 +23,6 @@ public class Challenge {
 
     public Challenge() {
         this(false);
-        fetchInput();
     }
 
     public Challenge(boolean isTest) {
@@ -33,8 +32,8 @@ public class Challenge {
         System.out.println("[INFO] ------------------------------------------------------------------------");
         System.out.println("[INFO]");
         try {
-            File file = getFile(isTest);
-            lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+            createFilesAndPopulateWithInput();
+            lines = Files.readAllLines(getFile(isTest).toPath(), StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +41,6 @@ public class Challenge {
 
     private File getFile(boolean isTest) throws URISyntaxException {
         return new File(new File("src/main/resources/" + getFilename(isTest)).getAbsolutePath());
-        // return new File(getClass().getClassLoader().getResource(getFilename(isTest)).toURI());
     }
 
     private String getFilename(boolean isTest) {
@@ -57,9 +55,21 @@ public class Challenge {
         return this.getClass().getSimpleName().replaceAll("Day(0)*", "");
     }
 
-    protected void fetchInput() {
-        RestTemplate restTemplate = new RestTemplate();
+    protected void createFilesAndPopulateWithInput() {
         try {
+            // Create test input file if not already created
+            File testFile = getFile(true);
+            if (!testFile.exists()) {
+                testFile.createNewFile();
+            }
+            // Don't update real input file if already fetched
+            if (getFile(false).exists()) {
+                System.out.println("[INFO] Input already fetched");
+                System.out.println("[INFO] ------------------------");
+                System.out.println("[INFO]");
+                return;
+            }
+            RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.COOKIE, "session=" + SESSION);
             HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
