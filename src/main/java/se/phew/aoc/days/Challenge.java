@@ -1,34 +1,78 @@
 package se.phew.aoc.days;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.File;
+import java.io.FileWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
 public class Challenge {
 
+    private String SESSION = "";
+
     protected List<String> lines;
-    protected String className;
     protected boolean isTest;
 
     public Challenge() {
         this(false);
+        fetchInput();
     }
 
     public Challenge(boolean isTest) {
         this.isTest = isTest;
-        className = this.getClass().getSimpleName();
         System.out.println("[INFO] ------------------------------------------------------------------------");
-        System.out.println("[INFO] RUNNING: " + className + (isTest ? " in test mode" : ""));
+        System.out.println("[INFO] RUNNING: " + this.getClass().getSimpleName() + (isTest ? " in test mode" : ""));
         System.out.println("[INFO] ------------------------------------------------------------------------");
         System.out.println("[INFO]");
         try {
-            String day = className.replaceAll("Day(0)*", "");
-            String packages = this.getClass().getPackage().getName();
-            String year = "20" + packages.split("\\.")[4].replaceAll("twenty", "");
-            String fileName = year + "/" + day + (isTest ? "-test" : "") + ".txt";
-            File file = new File(getClass().getClassLoader().getResource(fileName).toURI());
+            File file = getFile(isTest);
             lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private File getFile(boolean isTest) throws URISyntaxException {
+        return new File(new File("src/main/resources/" + getFilename(isTest)).getAbsolutePath());
+        // return new File(getClass().getClassLoader().getResource(getFilename(isTest)).toURI());
+    }
+
+    private String getFilename(boolean isTest) {
+        return "20" + getYear() + "/" + getDay() + (isTest ? "-test" : "") + ".txt";
+    }
+
+    private String getYear() {
+        return this.getClass().getPackage().getName().split("\\.")[4].replaceAll("twenty", "");
+    }
+
+    private String getDay() {
+        return this.getClass().getSimpleName().replaceAll("Day(0)*", "");
+    }
+
+    protected void fetchInput() {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.COOKIE, "session=" + SESSION);
+            HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
+            URI uri = new URI("https://adventofcode.com/20" + getYear() + "/day/" + getDay() + "/input");
+            ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+            File file = getFile(false);
+            file.createNewFile();
+            FileWriter myWriter = new FileWriter(file);
+            myWriter.write(result.getBody());
+            myWriter.close();
+            System.out.println("[INFO] Fetched and updated " + getYear() + " - Day " + getDay() + " input");
+            System.out.println("[INFO] -------------------------------------");
+            System.out.println("[INFO]");
         } catch (Exception e) {
             e.printStackTrace();
         }
