@@ -1,12 +1,12 @@
 package se.phew.aoc;
 
-import se.phew.aoc.days.twenty18.*;
+import se.phew.aoc.days.twenty21.*;
 
-public class App2018 {
+public class App2021 {
 
     public static void main(String[] args) {
         new Day01();
-        new Day02();
+        // new Day02();
         // new Day03();
         // new Day04();
         // new Day05();
