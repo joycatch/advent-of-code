@@ -7,11 +7,11 @@ public class Day02 extends Challenge {
     public Day02() {
         super();
 
-        Submarine submarine = new Submarine(0, 0);
+        Submarine submarine = new Submarine();
         followInstructions(submarine, true);
         printAnswer(1, submarine.position());
 
-        submarine = new Submarine(0, 0);
+        submarine = new Submarine();
         followInstructions(submarine, false);
         printAnswer(2, submarine.position());
     }
@@ -27,11 +27,6 @@ public class Day02 extends Challenge {
         int x = 0;
         int y = 0;
         int aim = 0;
-
-        public Submarine(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
 
         public void move(String instruction, int steps, boolean part1) {
             switch (instruction) {
