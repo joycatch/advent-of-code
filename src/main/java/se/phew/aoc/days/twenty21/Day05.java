@@ -28,9 +28,6 @@ public class Day05 extends Challenge {
             int y1 = Integer.parseInt(split[1]);
             int x2 = Integer.parseInt(split[2]);
             int y2 = Integer.parseInt(split[3]);
-            int xDiff = Math.max(x1, x2) - Math.min(x1, x2);
-            int yDiff = Math.max(y1, y2) - Math.min(y1, y2);
-
             if (part1) {
                 if (x1 == x2) {
                     for (int i = Math.min(y1, y2); i <= Math.max(y1, y2); i++) {
@@ -43,11 +40,11 @@ public class Day05 extends Challenge {
                     }
                 }
             } else {
-                if (yDiff == xDiff && xDiff > 0) {
-                    boolean down = y2 > y1;
-                    boolean right = x2 > x1;
+                int xDiff = Math.abs(x2 - x1);
+                int yDiff = Math.abs(y2 - y1);
+                if (yDiff == xDiff) {
                     for (int i = 0; i <= yDiff; i++) {
-                        map[y1 + (down ? i : -i)][x1 + (right ? i : -i)]++;
+                        map[y1 + (y2 > y1 ? i : -i)][x1 + (x2 > x1 ? i : -i)]++;
                     }
                 }
             }
