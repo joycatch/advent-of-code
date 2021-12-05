@@ -45,9 +45,9 @@ public class Day05 extends Challenge {
             } else {
                 if (yDiff == xDiff && xDiff > 0) {
                     boolean down = y2 > y1;
-                    boolean left = x2 > x1;
+                    boolean right = x2 > x1;
                     for (int i = 0; i <= yDiff; i++) {
-                        map[y1 + (down ? i : -i)][x1 + (left ? i : -i)]++;
+                        map[y1 + (down ? i : -i)][x1 + (right ? i : -i)]++;
                     }
                 }
             }
