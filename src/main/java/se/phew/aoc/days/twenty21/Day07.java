@@ -3,7 +3,6 @@ package se.phew.aoc.days.twenty21;
 import se.phew.aoc.days.Challenge;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Day07 extends Challenge {
 
@@ -15,15 +14,15 @@ public class Day07 extends Challenge {
             positions.add(Integer.parseInt(split));
         }
 
-        Collections.sort(positions);
-
         printAnswer(1, countFuel(positions, true));
         printAnswer(2, countFuel(positions, false));
     }
 
     private int countFuel(ArrayList<Integer> positions, boolean part1) {
         int min = Integer.MAX_VALUE;
-        for (int i = positions.get(0); i <= positions.get(positions.size() - 1); i++) {
+        int start = positions.stream().mapToInt(s -> s).min().getAsInt();
+        int end = positions.stream().mapToInt(s -> s).max().getAsInt();
+        for (int i = start; i <= end; i++) {
             int result = 0;
             for (Integer submarine : positions) {
                 int cost;
