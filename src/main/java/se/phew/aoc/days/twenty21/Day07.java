@@ -27,13 +27,9 @@ public class Day07 extends Challenge {
             int result = 0;
             for (Integer submarine : positions) {
                 int cost;
-                if (part1) {
-                    cost = Math.abs(submarine - i);
-                } else {
-                    cost = 0;
-                    for (int j = 1; j <= Math.abs(submarine - i); j++) {
-                        cost += j;
-                    }
+                cost = Math.abs(submarine - i);
+                if (!part1) {
+                    cost = cost * (cost + 1) / 2;
                 }
                 result += cost;
             }
