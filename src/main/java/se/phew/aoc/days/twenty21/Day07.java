@@ -22,8 +22,7 @@ public class Day07 extends Challenge {
     }
 
     private int countFuel(ArrayList<Integer> positions, boolean part1) {
-        int min;
-        min = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
         for (int i = positions.get(0); i <= positions.get(positions.size() - 1); i++) {
             int result = 0;
             for (Integer submarine : positions) {
