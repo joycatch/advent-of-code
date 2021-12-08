@@ -13,15 +13,15 @@ public class Day08 extends Challenge {
         int part2 = 0;
         for (String line : lines) {
             String[] split = line.split(" \\| ");
-            String[] digits = split[1].trim().split(" ");
-            for (String digit : digits) {
+            String[] out = split[1].trim().split(" ");
+            for (String digit : out) {
                 part1 += (digit.length() == 2 || digit.length() == 4 || digit.length() == 3 || digit.length() == 7) ? 1 : 0;
             }
             HashMap<Character, Integer> map = new HashMap<>();
             for (Character c : split[0].replaceAll(" ", "").toCharArray()) {
                 map.put(c, map.get(c) == null ? 1 : map.get(c) + 1);
             }
-            part2 += digit(digits[0], map) * 1000 + digit(digits[1], map) * 100 + digit(digits[2], map) * 10 + digit(digits[3], map);
+            part2 += digit(out[0], map) * 1000 + digit(out[1], map) * 100 + digit(out[2], map) * 10 + digit(out[3], map);
         }
         printAnswer(1, part1);
         printAnswer(2, part2);
