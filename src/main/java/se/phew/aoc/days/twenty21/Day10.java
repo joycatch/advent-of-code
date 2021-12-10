@@ -33,11 +33,11 @@ public class Day10 extends Challenge {
                 }
             }
             if (!isCorrupt) {
-                long count = 0;
+                long score = 0;
                 while (!stack.isEmpty()) {
-                    count = 5 * count + getCloserPoints(getCloser(stack.pop()));
+                    score = 5 * score + getCloserPoints(getCloser(stack.pop()));
                 }
-                scores.add(count);
+                scores.add(score);
             }
         }
 
