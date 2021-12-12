@@ -44,19 +44,17 @@ public class Day12 extends Challenge {
     private void traverse(Cave current, HashMap<String, Integer> allowed, Stack<Cave> visited) {
         visited.push(current);
         allowed.put(current.name, allowed.get(current.name) - 1);
-        if (current.name.equals("end")) {
-            uniquePaths.add(getPath(visited));
-            visited.pop();
-            allowed.put(current.name, allowed.get(current.name) + 1);
-            return;
-        }
-        for (Cave next : current.adjacent) {
-            if (allowed.get(next.name) != null && allowed.get(next.name) > 0) {
-                traverse(next, allowed, visited);
+        if (!current.name.equals("end")) {
+            for (Cave next : current.adjacent) {
+                if (allowed.get(next.name) != null && allowed.get(next.name) > 0) {
+                    traverse(next, allowed, visited);
+                }
             }
+        } else {
+            uniquePaths.add(getPath(visited));
         }
-        visited.pop();
         allowed.put(current.name, allowed.get(current.name) + 1);
+        visited.pop();
     }
 
     private String getPath(List<Cave> visited) {
