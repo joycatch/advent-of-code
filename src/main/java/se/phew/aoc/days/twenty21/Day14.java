@@ -3,54 +3,56 @@ package se.phew.aoc.days.twenty21;
 import se.phew.aoc.days.Challenge;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Day14 extends Challenge {
 
+    String template;
+    Map<String, String> rules;
+
     public Day14() {
-        super(true);
+        super();
 
-        String sequence = lines.get(0);
-        HashMap<String, String> rules = new HashMap<>();
+        template = lines.get(0);
+        rules = lines.subList(2, lines.size())
+                .stream()
+                .map(line -> line.split(" -> "))
+                .collect(Collectors.toMap(s -> s[0], s -> s[1]));
 
-        for (String line : lines.subList(2, lines.size())) {
-            String[] split = line.split(" -> ");
-            rules.put(split[0], split[0].charAt(0) + split[1] + split[0].charAt(1));
+        HashMap<String, Long> pairs = new HashMap<>();
+        for (int i = 0; i < template.length() - 1; i++) {
+            pairs.merge(template.substring(i, i + 2), 1L, Long::sum);
         }
 
-        HashMap<String, Long> pairCount = new HashMap<>();
-        for (int pos = 0; pos < sequence.length() - 1; pos++) {
-            String pair = sequence.substring(pos, pos + 2);
-            pairCount.put(pair, 1L);
-        }
+        printAnswer(1, getQuantityDiff(pairs, 10));
+        printAnswer(2, getQuantityDiff(pairs, 40));
+    }
 
-        for (int i = 0; i < 10; i++) {
-            HashMap<String, Long> newMap = (HashMap<String, Long>) pairCount.clone();
-            for (String pair : pairCount.keySet()) {
-                if (rules.get(pair) != null) {
-                    if (newMap.get(pair) == 1) {
-                        newMap.remove(pair);
-                    } else {
-                        newMap.put(pair, newMap.get(pair) - 1);
-                    }
-                    String first = rules.get(pair).substring(0, 2);
-                    String second = rules.get(pair).substring(1, 3);
-                    newMap.put(first, newMap.get(first) == null ? 1 : newMap.get(first) + 1);
-                    newMap.put(second, newMap.get(second) == null ? 1 : newMap.get(second) + 1);
+    private long getQuantityDiff(HashMap<String, Long> pairs, int steps) {
+        for (int i = 0; i < steps; i++) {
+            HashMap<String, Long> newPairs = new HashMap<>();
+            for (String pair : pairs.keySet()) {
+                if (rules.containsKey(pair)) {
+                    newPairs.merge(pair.charAt(0) + rules.get(pair), pairs.get(pair), Long::sum);
+                    newPairs.merge(rules.get(pair) + pair.charAt(1), pairs.get(pair), Long::sum);
                 }
             }
-            pairCount = newMap;
+            pairs = newPairs;
         }
 
-        HashMap<Character, Long> countMap = new HashMap<>();
-        for (String pair : pairCount.keySet()) {
-            long multiplier = pairCount.get(pair);
-            countMap.put(pair.charAt(0), multiplier + (countMap.get(pair.charAt(0)) == null ? 0 : countMap.get(pair.charAt(0))));
-            countMap.put(pair.charAt(1), multiplier + (countMap.get(pair.charAt(1)) == null ? 0 : countMap.get(pair.charAt(1))));
+        HashMap<Character, Long> charCount = new HashMap<>();
+        for (String key : rules.keySet()) {
+            charCount.put(key.charAt(0), 1L);
+            charCount.put(key.charAt(1), 1L);
+            charCount.put(rules.get(key).charAt(0), 1L);
         }
-
-        long max = countMap.values().stream().mapToLong(Long::longValue).max().getAsLong();
-        long min = countMap.values().stream().mapToLong(Long::longValue).min().getAsLong();
-
-        printAnswer(2, max + "-" + min);
+        for (String key : pairs.keySet()) {
+            charCount.merge(key.charAt(0), pairs.get(key), Long::sum);
+        }
+        charCount.merge(template.charAt(template.length() - 1), 1L, Long::sum);
+        long max = charCount.values().stream().mapToLong(s -> s).max().getAsLong();
+        long min = charCount.values().stream().mapToLong(s -> s).min().getAsLong();
+        return max - min;
     }
 }
