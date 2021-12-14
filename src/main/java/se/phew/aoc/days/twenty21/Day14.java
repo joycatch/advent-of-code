@@ -17,34 +17,14 @@ public class Day14 extends Challenge {
             rules.put(split[0], split[0].charAt(0) + split[1] + split[0].charAt(1));
         }
 
-        for (int i = 0; i < 10; i++) {
-            // System.out.println(sequence);
-            String newSequence = "";
-            for (int pos = 0; pos < sequence.length() - 1; pos++) {
-                String pair = sequence.substring(pos, pos + 2);
-                newSequence += rules.get(pair) != null ? rules.get(pair).substring(0, 2) : pair.substring(0, 1);
-            }
-            sequence = newSequence + sequence.charAt(sequence.length() - 1);
-        }
-        HashMap<Character, Integer> countMap = new HashMap<>();
-        for (Character c : sequence.toCharArray()) {
-            countMap.put(c, countMap.get(c) == null ? 1 : countMap.get(c) + 1);
-        }
-        long max = countMap.values().stream().mapToLong(Integer::longValue).max().getAsLong();
-        long min = countMap.values().stream().mapToLong(Integer::longValue).min().getAsLong();
-
-        printAnswer(1, max - min);
-
-        sequence = lines.get(0);
-        HashMap<String, Integer> pairCount = new HashMap<>();
+        HashMap<String, Long> pairCount = new HashMap<>();
         for (int pos = 0; pos < sequence.length() - 1; pos++) {
             String pair = sequence.substring(pos, pos + 2);
-            pairCount.put(pair, 1);
+            pairCount.put(pair, 1L);
         }
 
         for (int i = 0; i < 10; i++) {
-            HashMap<String, Integer> newMap = (HashMap<String, Integer>) pairCount.clone();
-
+            HashMap<String, Long> newMap = (HashMap<String, Long>) pairCount.clone();
             for (String pair : pairCount.keySet()) {
                 if (rules.get(pair) != null) {
                     if (newMap.get(pair) == 1) {
@@ -58,17 +38,18 @@ public class Day14 extends Challenge {
                     newMap.put(second, newMap.get(second) == null ? 1 : newMap.get(second) + 1);
                 }
             }
-
             pairCount = newMap;
         }
-        countMap = new HashMap<>();
+
+        HashMap<Character, Long> countMap = new HashMap<>();
         for (String pair : pairCount.keySet()) {
-            countMap.put(pair.charAt(0), countMap.get(pair.charAt(0)) == null ? 1 : countMap.get(pair.charAt(0)) + 1);
-            countMap.put(pair.charAt(1), countMap.get(pair.charAt(1)) == null ? 1 : countMap.get(pair.charAt(1)) + 1);
+            long multiplier = pairCount.get(pair);
+            countMap.put(pair.charAt(0), multiplier + (countMap.get(pair.charAt(0)) == null ? 0 : countMap.get(pair.charAt(0))));
+            countMap.put(pair.charAt(1), multiplier + (countMap.get(pair.charAt(1)) == null ? 0 : countMap.get(pair.charAt(1))));
         }
 
-        max = countMap.values().stream().mapToLong(Integer::longValue).max().getAsLong();
-        min = countMap.values().stream().mapToLong(Integer::longValue).min().getAsLong();
+        long max = countMap.values().stream().mapToLong(Long::longValue).max().getAsLong();
+        long min = countMap.values().stream().mapToLong(Long::longValue).min().getAsLong();
 
         printAnswer(2, max + "-" + min);
     }

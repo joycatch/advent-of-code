@@ -11,7 +11,7 @@ public class Day12 extends Challenge {
     HashSet<String> uniquePaths = new HashSet<>();
 
     public Day12() {
-        super();
+        super(true);
 
         for (String line : lines) {
             String[] split = line.split("-");

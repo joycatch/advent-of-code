@@ -11,7 +11,7 @@ public class Day13 extends Challenge {
     int[][] map;
 
     public Day13() {
-        super();
+        super(true);
 
         List<Dot> dots = new ArrayList<>();
 
