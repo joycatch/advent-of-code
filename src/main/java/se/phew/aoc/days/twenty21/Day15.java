@@ -14,7 +14,7 @@ public class Day15 extends Challenge {
     int[][] offsets = new int[][] { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
     int[][] map;
     int columns, rows;
-    HashMap<String, Node> nodes = new HashMap<>();
+    HashMap<String, Node> nodes;
 
     public Day15() {
         super();
@@ -31,16 +31,35 @@ public class Day15 extends Challenge {
         }
 
         Graph graph = createAndPopulateGraph();
-
         graph = calculateShortestPathFromSource(graph, nodes.get(getNodeName(0, 0)));
-
         int part1 = graph.nodes.stream().filter(n -> n.y == rows - 1 && n.x == columns - 1).findFirst().get().distance;
-
         printAnswer(1, part1);
-        printAnswer(2, "");
+
+        int[][] newMap = new int[columns*5][rows*5];
+
+        for (int iy = 0; iy < 5; iy++) {
+            for (int ix = 0; ix < 5; ix++) {
+                for (int y = 0; y < columns; y++) {
+                    for (int x = 0; x < rows; x++) {
+                        int newRisk = map[y][x] + iy + ix;
+                        newMap[iy*rows + y][ix*columns + x] = newRisk > 9 ? (newRisk % 9) : newRisk;
+                    }
+                }
+            }
+        }
+
+        map = newMap;
+        columns *= 5;
+        rows *= 5;
+
+        graph = createAndPopulateGraph();
+        graph = calculateShortestPathFromSource(graph, nodes.get(getNodeName(0, 0)));
+        int part2 = graph.nodes.stream().filter(n -> n.y == rows - 1 && n.x == columns - 1).findFirst().get().distance;
+        printAnswer(2, part2);
     }
 
     private Graph createAndPopulateGraph() {
+        nodes = new HashMap<>();
         Graph graph = new Graph();
         for (int y = 0; y < columns; y++) {
             for (int x = 0; x < rows; x++) {
