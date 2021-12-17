@@ -20,7 +20,7 @@ public class Day17 extends Challenge {
         int velocities = 0;
 
         for (int x = 0; x <= maxX; x++) {
-            for (int y = -100; y <= 100; y++) {
+            for (int y = -500; y <= 500; y++) {
                 Probe probe = new Probe(x, y);
                 while (!probe.inTargetArea() && probe.x <= maxX && probe.y >= minY) {
                     probe.step();
