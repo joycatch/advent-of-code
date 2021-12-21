@@ -32,9 +32,7 @@ public class Day20 extends Challenge {
             if (i == 1) {
                 printAnswer(1, countLit());
             }
-
         }
-
         printAnswer(2, countLit());
     }
 
