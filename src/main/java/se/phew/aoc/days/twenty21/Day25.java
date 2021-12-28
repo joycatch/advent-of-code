@@ -6,6 +6,7 @@ public class Day25 extends Challenge {
 
     char[][] map;
     int columns, rows;
+    boolean movement = true;
 
     public Day25() {
         super();
@@ -21,57 +22,37 @@ public class Day25 extends Challenge {
             }
         }
 
-        printMap();
-
         int steps = 0;
-        boolean movements = true;
-        while (movements) {
-            movements = false;
-            char[][] newMap = new char[rows][columns];
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < columns; x++) {
-                    if (map[y][x] == '>' && isFree(y, nextRight(x))) {
-                        newMap[y][nextRight(x)] = '>';
-                        newMap[y][x] = '.';
-                        movements = true;
-                    } else {
-                        if (newMap[y][x] != '>') {
-                            newMap[y][x] = map[y][x];
-                        }
-                    }
-                }
-            }
-            map = newMap;
-            newMap = new char[rows][columns];
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < columns; x++) {
-                    if (map[y][x] == 'v' && isFree(nextDown(y), x)) {
-                        newMap[nextDown(y)][x] = 'v';
-                        newMap[y][x] = '.';
-                        movements = true;
-                    } else {
-                        if (newMap[y][x] != 'v') {
-                            newMap[y][x] = map[y][x];
-                        }
-                    }
-                }
-            }
-            map = newMap;
+        while (movement) {
+            movement = false;
+            moveCharacter('>');
+            moveCharacter('v');
             steps++;
         }
 
         printAnswer(1, steps);
-        printAnswer(2, "");
     }
 
-    private void printMap() {
+    private void moveCharacter(char c) {
+        char[][] newMap = new char[rows][columns];
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < columns; x++) {
-                System.out.print(map[y][x]);
+                if (map[y][x] == c && c=='v' && isFree(nextDown(y), x)) {
+                    newMap[nextDown(y)][x] = c;
+                    newMap[y][x] = '.';
+                    movement = true;
+                } else if (map[y][x] == c && c=='>' && isFree(y, nextRight(x))) {
+                    newMap[y][nextRight(x)] = c;
+                    newMap[y][x] = '.';
+                    movement = true;
+                } else {
+                    if (newMap[y][x] != c) {
+                        newMap[y][x] = map[y][x];
+                    }
+                }
             }
-            System.out.println();
         }
-        System.out.println();
+        map = newMap;
     }
 
     private boolean isFree(int y, int x) {
