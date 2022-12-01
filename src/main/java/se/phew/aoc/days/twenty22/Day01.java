@@ -8,40 +8,30 @@ import java.util.List;
 
 public class Day01 extends Challenge {
 
+    ArrayList<Integer> sums = new ArrayList<>();
+
     public Day01() {
         super();
 
-        List<Reindeer> reindeers = new ArrayList<>();
-        Reindeer reindeer = new Reindeer();
-
+        List<Integer> calories = new ArrayList<>();
         for (String line : lines) {
             if (!line.isEmpty()) {
-                reindeer.list.add(Integer.parseInt(line));
+                calories.add(Integer.parseInt(line));
             } else {
-                reindeers.add(reindeer);
-                reindeer = new Reindeer();
+                addSum(calories);
+                calories = new ArrayList<>();
             }
         }
-        reindeers.add(reindeer);
-
-        int part1 = -1;
-        ArrayList<Integer> sums = new ArrayList<>();
-        for (Reindeer r : reindeers) {
-            int sum = r.list.stream().mapToInt(Integer::intValue).sum();
-            sums.add(sum);
-            if (sum > part1) {
-                part1 = sum;
-            }
-        }
+        addSum(calories);
 
         Collections.sort(sums);
-        int part2 = sums.get(sums.size() - 1) + sums.get(sums.size() - 2) + sums.get(sums.size() - 3);
 
-        printAnswer(1, part1);
-        printAnswer(2, part2);
+        printAnswer(1, sums.get(sums.size() - 1));
+        printAnswer(2, sums.get(sums.size() - 1) + sums.get(sums.size() - 2) + sums.get(sums.size() - 3));
     }
 
-    class Reindeer {
-        List<Integer> list = new ArrayList<>();
+    void addSum(List<Integer> calories) {
+        int sum = calories.stream().mapToInt(Integer::intValue).sum();
+        sums.add(sum);
     }
 }
