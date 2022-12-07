@@ -7,7 +7,7 @@ import java.util.*;
 public class Day13 extends Challenge {
 
     public Day13() {
-        super();
+        super(false);
 
         HashMap<Long, Integer> map = new HashMap<>();
         int earliestDeparture = Integer.parseInt(lines.get(0));

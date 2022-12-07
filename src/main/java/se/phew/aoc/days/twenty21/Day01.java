@@ -6,7 +6,7 @@ import se.phew.aoc.days.Challenge;
 public class Day01 extends Challenge {
 
     public Day01() {
-        super();
+        super(false);
 
         int previous = Integer.MIN_VALUE;
         int previousSum = Integer.MIN_VALUE;

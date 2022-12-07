@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Day14 extends Challenge {
 
     public Day14() {
-        super();
+        super(false);
 
         HashMap<Long, Long> memoryPart1 = new HashMap<>();
         HashMap<Long, Long> memoryPart2 = new HashMap<>();

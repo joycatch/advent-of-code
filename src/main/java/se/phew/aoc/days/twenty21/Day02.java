@@ -5,7 +5,7 @@ import se.phew.aoc.days.Challenge;
 public class Day02 extends Challenge {
 
     public Day02() {
-        super();
+        super(false);
 
         Submarine submarine = new Submarine(false);
         followInstructions(submarine);

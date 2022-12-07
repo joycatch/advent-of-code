@@ -7,7 +7,7 @@ import java.util.*;
 public class Day09 extends Challenge {
 
     public Day09() {
-        super();
+        super(false);
 
         long[] values = new long[lines.size()];
         for (int i = 0; i < lines.size(); i++) {

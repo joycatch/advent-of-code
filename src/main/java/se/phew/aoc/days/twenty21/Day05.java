@@ -8,7 +8,7 @@ public class Day05 extends Challenge {
     int[][] map;
 
     public Day05() {
-        super();
+        super(false);
 
         MAP_SIZE = isTest ? 10 : 1000;
         map = new int[MAP_SIZE][MAP_SIZE];

@@ -10,7 +10,7 @@ public class Day17 extends Challenge {
     int wSize;
 
     public Day17() {
-        super();
+        super(false);
 
         xSize = lines.get(0).length() + 20;
         ySize = lines.size() + 20;

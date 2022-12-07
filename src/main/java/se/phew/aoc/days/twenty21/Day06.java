@@ -9,7 +9,7 @@ public class Day06 extends Challenge {
     HashMap<Integer, Long> map = new HashMap<>();
 
     public Day06() {
-        super();
+        super(false);
 
         for (int i = 0; i < 9; i++) {
             map.put(i, (long) 0);

@@ -22,7 +22,6 @@ public class Challenge {
     protected boolean isTest;
 
     public Challenge() {
-        this(false);
     }
 
     public Challenge(boolean isTest) {

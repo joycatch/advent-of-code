@@ -5,7 +5,7 @@ import se.phew.aoc.days.Challenge;
 public class Day06 extends Challenge {
 
     public Day06() {
-        super();
+        super(false);
 
         for (String line : lines) {
             printAnswer(1,  findMarkerStart(line, 4));

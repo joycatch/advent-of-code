@@ -13,7 +13,7 @@ public class Day21 extends Challenge {
             3+1+1, 3+1+2, 3+1+3, 3+2+1, 3+2+2, 3+2+3, 3+3+1, 3+3+2, 3+3+3 };
 
     public Day21() {
-        super();
+        super(false);
 
         Player player1 = new Player(1, Integer.parseInt(lines.get(0).split(": ")[1]));
         Player player2 = new Player(2, Integer.parseInt(lines.get(1).split(": ")[1]));

@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class Day07 extends Challenge {
 
     public Day07() {
-        super();
+        super(false);
 
         HashMap<String, Bag> allBags = new HashMap<>();
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Day03 extends Challenge {
 
     public Day03() {
-        super();
+        super(false);
 
         String gamma = "";
         String epsilon = "";

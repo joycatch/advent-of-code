@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Day05 extends Challenge {
 
     public Day05() {
-        super();
+        super(false);
 
         ArrayList<String> list = new ArrayList<String>();
 

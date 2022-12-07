@@ -12,7 +12,7 @@ public class Day14 extends Challenge {
     Map<String, String> rules;
 
     public Day14() {
-        super();
+        super(false);
 
         template = lines.get(0);
         rules = lines.subList(2, lines.size())

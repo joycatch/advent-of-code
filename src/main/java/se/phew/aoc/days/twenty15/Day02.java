@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class Day02 extends Challenge {
 
     public Day02() {
-        super();
+        super(false);
 
         Pattern pattern = Pattern.compile("(\\d*)x(\\d*)x(\\d*)");
 

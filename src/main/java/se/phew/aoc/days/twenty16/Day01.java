@@ -14,7 +14,7 @@ public class Day01 extends Challenge {
     private int part2 = -1;
 
     public Day01() {
-        super();
+        super(false);
 
         Matcher m = Pattern.compile("((L|R)(\\d+))+").matcher(lines.get(0));
         while (m.find()) {

@@ -8,7 +8,7 @@ public class Day08 extends Challenge {
     private int part1 = 0;
 
     public Day08() {
-        super();
+        super(false);
         Instruction[] instructions = new Instruction[lines.size()];
 
         int i = 0;

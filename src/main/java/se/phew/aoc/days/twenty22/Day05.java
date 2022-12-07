@@ -9,7 +9,7 @@ public class Day05 extends Challenge {
     Stack[] stacks;
 
     public Day05() {
-        super();
+        super(false);
 
         printAnswer(1, run(true));
         printAnswer(2, run(false));

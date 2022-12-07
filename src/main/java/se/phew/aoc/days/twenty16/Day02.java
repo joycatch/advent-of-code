@@ -14,7 +14,7 @@ public class Day02 extends Challenge {
     private int x = 1, y = 1;
 
     public Day02() {
-        super();
+        super(false);
 
         // Part 1
         String result = "";

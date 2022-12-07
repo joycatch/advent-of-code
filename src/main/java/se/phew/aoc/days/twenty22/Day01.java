@@ -9,7 +9,7 @@ import java.util.List;
 public class Day01 extends Challenge {
 
     public Day01() {
-        super();
+        super(false);
 
         ArrayList<Integer> sums = new ArrayList<>();
 

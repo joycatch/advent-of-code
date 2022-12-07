@@ -10,7 +10,7 @@ public class Day23 extends Challenge {
     int listSize;
 
     public Day23() {
-        super();
+        super(false);
 
         // Part 1
         populateList(false);

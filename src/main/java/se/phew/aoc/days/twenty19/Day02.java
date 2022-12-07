@@ -5,7 +5,7 @@ import se.phew.aoc.days.Challenge;
 public class Day02 extends Challenge {
 
     public Day02() {
-        super();
+        super(false);
 
         // Part 1
         printAnswer(1, getValueAtFirstPosition(12, 2));

@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class Day08 extends Challenge {
 
     public Day08() {
-        super();
+        super(false);
 
         int part1 = 0;
         int part2 = 0;

@@ -10,7 +10,7 @@ public class Day20 extends Challenge {
     int columns, rows, padding = 200;
 
     public Day20() {
-        super();
+        super(false);
 
         lookup = lines.get(0).toCharArray();
 

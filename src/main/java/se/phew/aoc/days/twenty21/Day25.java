@@ -9,7 +9,7 @@ public class Day25 extends Challenge {
     boolean movement = true;
 
     public Day25() {
-        super();
+        super(false);
 
         rows = lines.size();
         columns = lines.get(0).length();

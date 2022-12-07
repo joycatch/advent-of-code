@@ -7,7 +7,7 @@ public class Day17 extends Challenge {
     static int minX, minY, maxX, maxY;
 
     public Day17() {
-        super();
+        super(false);
 
         String line = lines.get(0).replaceAll("target area\\: x=", "").replaceAll(" y=", "");
         String[] split = line.split(",");

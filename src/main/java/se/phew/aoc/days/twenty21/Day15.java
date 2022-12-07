@@ -17,7 +17,7 @@ public class Day15 extends Challenge {
     HashMap<String, Node> nodes;
 
     public Day15() {
-        super();
+        super(false);
 
         columns = lines.size();
         rows = lines.get(0).length();

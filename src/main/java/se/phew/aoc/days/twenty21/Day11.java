@@ -9,7 +9,7 @@ public class Day11 extends Challenge {
     int rows, columns;
 
     public Day11() {
-        super();
+        super(false);
 
         columns = lines.size();
         rows = lines.get(0).length();

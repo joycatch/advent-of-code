@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Day07 extends Challenge {
 
     public Day07() {
-        super();
+        super(false);
 
         ArrayList<Integer> positions = new ArrayList<>();
         for (String split : lines.get(0).split(",")) {

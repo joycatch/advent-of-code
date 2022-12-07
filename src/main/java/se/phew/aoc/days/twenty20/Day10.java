@@ -8,7 +8,7 @@ import java.util.Collections;
 public class Day10 extends Challenge {
 
     public Day10() {
-        super();
+        super(false);
 
         ArrayList<Integer> adapters = new ArrayList<>();
         for (String line : lines) {

@@ -9,7 +9,7 @@ public class Day16 extends Challenge {
     ArrayList<Field> fields = new ArrayList<>();
 
     public Day16() {
-        super();
+        super(false);
 
         double result = 0;
         ArrayList<Ticket> validTickets = new ArrayList<>();

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class Day04 extends Challenge {
 
     public Day04() {
-        super();
+        super(false);
 
         int valid = 0;
         int totalEntries = 0;

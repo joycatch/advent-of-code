@@ -19,7 +19,7 @@ public class Day18 extends Challenge {
     boolean printEachLine = false;
 
     public Day18() {
-        super();
+        super(false);
 
         printAnswer(1, runPart(1));
         printAnswer(2, runPart(2));

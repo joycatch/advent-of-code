@@ -18,7 +18,7 @@ public class Day20 extends Challenge {
     int gridSize;
 
     public Day20() {
-        super();
+        super(false);
 
         readInputAndPopulateTiles();
 

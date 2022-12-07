@@ -7,7 +7,7 @@ import java.util.*;
 public class Day24 extends Challenge {
 
     public Day24() {
-        super();
+        super(false);
 
         HashMap<Position, Boolean> map = new HashMap<>();
 

@@ -5,7 +5,7 @@ import se.phew.aoc.days.Challenge;
 public class Day25 extends Challenge {
 
     public Day25() {
-        super();
+        super(false);
 
         long cardPublicKey = (isTest ? 5764801 : Long.parseLong(lines.get(0)));
         long doorPublicKey = (isTest ? 17807724 : Long.parseLong(lines.get(1)));

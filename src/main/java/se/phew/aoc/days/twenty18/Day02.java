@@ -9,7 +9,7 @@ import java.util.HashSet;
 public class Day02 extends Challenge {
 
     public Day02() {
-        super();
+        super(false);
 
         // Part 1
         ArrayList<Character> two = new ArrayList<>();

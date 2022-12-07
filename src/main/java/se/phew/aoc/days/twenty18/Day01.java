@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class Day01 extends Challenge {
 
     public Day01() {
-        super();
+        super(false);
 
         int sum = 0;
         for (String line : lines) {

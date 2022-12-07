@@ -12,7 +12,7 @@ public class Day22 extends Challenge {
     int game = 1;
 
     public Day22() {
-        super();
+        super(false);
 
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");

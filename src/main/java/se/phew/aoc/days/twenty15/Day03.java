@@ -10,7 +10,7 @@ public class Day03 extends Challenge {
     int x = 0, y = 0, rx = 0, ry = 0, turn = 0;
 
     public Day03() {
-        super();
+        super(false);
 
         // Part 1
         map.put("0,0", 1);

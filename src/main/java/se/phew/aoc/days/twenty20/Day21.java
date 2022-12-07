@@ -12,7 +12,7 @@ public class Day21 extends Challenge {
     ArrayList<Food> foods = new ArrayList<>();
 
     public Day21() {
-        super();
+        super(false);
 
         for (String line : lines) {
             foods.add(new Food(line));

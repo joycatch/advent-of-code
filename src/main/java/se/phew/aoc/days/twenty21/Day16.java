@@ -25,7 +25,7 @@ public class Day16 extends Challenge {
     static int index = 0;
 
     public Day16()   {
-        super();
+        super(false);
 
         for (Character c : lines.get(0).toCharArray()) {
             binary += decode.get(c);

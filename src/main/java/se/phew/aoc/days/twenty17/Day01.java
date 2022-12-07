@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Day01 extends Challenge {
 
     public Day01() {
-        super();
+        super(false);
 
         String line = lines.get(0);
         char[] chars = line.toCharArray();

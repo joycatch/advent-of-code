@@ -10,7 +10,7 @@ public class Day04 extends Challenge {
     static int BOARD_SIZE = 5;
 
     public Day04() {
-        super();
+        super(false);
 
         List<Integer> numbers = Arrays.stream(lines.get(0).split(",")).mapToInt(s -> Integer.parseInt(s)).boxed().collect(Collectors.toList());
         List<Board> boards = new ArrayList<>();

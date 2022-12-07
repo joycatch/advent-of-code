@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Day03 extends Challenge {
 
     public Day03() {
-        super();
+        super(false);
 
         int[][] map = new int[3][lines.size()];
 

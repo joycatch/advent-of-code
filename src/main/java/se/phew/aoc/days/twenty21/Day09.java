@@ -13,7 +13,7 @@ public class Day09 extends Challenge {
     int yMax, xMax;
 
     public Day09() {
-        super();
+        super(false);
 
         yMax = lines.size();
         xMax = lines.get(0).length();

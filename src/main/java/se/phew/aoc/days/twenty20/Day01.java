@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class Day01 extends Challenge {
 
     public Day01() {
-        super();
+        super(false);
 
         HashSet<Integer> set = lines.stream().mapToInt(x -> Integer.parseInt(x)).collect(HashSet::new, HashSet::add, HashSet::addAll);
 

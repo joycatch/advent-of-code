@@ -11,7 +11,7 @@ public class App2022 {
         new Day04();
         new Day05();
         new Day06();
-        /*new Day07();
+        new Day07();
         new Day08();
         new Day09();
         new Day10();
@@ -29,6 +29,6 @@ public class App2022 {
         new Day22();
         new Day23();
         new Day24();
-        new Day25();  */
+        new Day25();
     }
 }

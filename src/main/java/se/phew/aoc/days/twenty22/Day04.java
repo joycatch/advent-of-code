@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Day04 extends Challenge {
 
     public Day04() {
-        super();
+        super(false);
 
         int part1 = 0;
         int part2 = 0;

@@ -10,7 +10,7 @@ import java.util.Stack;
 public class Day10 extends Challenge {
 
     public Day10() {
-        super();
+        super(false);
 
         HashMap<Character, Integer> map = new HashMap<>();
         for (char c : "([{<>}])".toCharArray()) {
