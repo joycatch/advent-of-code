@@ -30,10 +30,7 @@ public class Day07 extends Challenge {
                             break;
                         default:
                             stack.push(current);
-                            Directory newFolder = current.directories().stream().filter(f -> folderName.equals(f.name)).findFirst().get();
-                            if (newFolder != null) {
-                                current = newFolder;
-                            }
+                            current = current.directories().stream().filter(f -> folderName.equals(f.name)).findFirst().get();
                             break;
                     }
                 }
@@ -57,11 +54,11 @@ public class Day07 extends Challenge {
         printAnswer(2, options.stream().findFirst().get());
     }
 
-    private static void traverse(Directory current, ArrayList<Integer> sum) {
+    private static void traverse(Directory current, ArrayList<Integer> sizes) {
         for (Directory directory : current.directories()) {
-            sum.add(directory.size());
+            sizes.add(directory.size());
             if (!directory.directories().isEmpty()) {
-                traverse(directory, sum);
+                traverse(directory, sizes);
             }
         }
     }
