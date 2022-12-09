@@ -7,7 +7,7 @@ import java.util.*;
 public class Day09 extends Challenge {
 
     public Day09() {
-        super(true);
+        super(false);
 
         Rope ropePart1 = new Rope(1);
         Rope ropePart2 = new Rope(10);
@@ -18,7 +18,7 @@ public class Day09 extends Challenge {
             for (int i = 0; i < Integer.parseInt(s[1]); i++) {
                 ropePart1.move(s[0]);
                 ropePart2.move(s[0]);
-                printTest(ropePart2);
+                //printTest(ropePart2);
             }
         }
 
@@ -141,83 +141,4 @@ public class Day09 extends Challenge {
             locations.add(location);
         }
     }
-
-    /*
-    class Rope {
-        int headX, headY;
-        int tailX, tailY;
-
-        Set<String> trail = new HashSet<>();
-
-        public Rope(int length) {
-            trail.add("0,0");
-        }
-
-        public int countTrailLocations() {
-            return trail.size();
-        }
-
-        public void move(String direction) {
-            switch (direction) {
-                case "R":
-                    headX++;
-                    break;
-                case "U":
-                    headY++;
-                    break;
-                case "D":
-                    headY--;
-                    break;
-                case "L":
-                    headX--;
-                    break;
-            }
-
-            int diffX = Math.abs(headX - tailX);
-            int diffY = Math.abs(headY - tailY);
-            int diff = diffX + diffY;
-            switch (diff) {
-                case 1:
-                    break;
-                case 2:
-                    if (diffX == 0 || diffY == 0) {
-                        switch (direction) {
-                            case "R":
-                                tailX++;
-                                break;
-                            case "U":
-                                tailY++;
-                                break;
-                            case "D":
-                                tailY--;
-                                break;
-                            case "L":
-                                tailX--;
-                                break;
-                        }
-                    }
-                    break;
-                case 3:
-                    tailX = headX;
-                    tailY = headY;
-                    switch (direction) {
-                        case "R":
-                            tailX--;
-                            break;
-                        case "U":
-                            tailY--;
-                            break;
-                        case "D":
-                            tailY++;
-                            break;
-                        case "L":
-                            tailX++;
-                            break;
-                    }
-                    break;
-            }
-            String location = tailX + "," + tailY;
-            trail.add(location);
-        }
-    }*/
 }
