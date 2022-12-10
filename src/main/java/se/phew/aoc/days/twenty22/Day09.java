@@ -47,7 +47,6 @@ public class Day09 extends Challenge {
     }
 
     class Part {
-
         String name;
         int x = 0, y = 0;
         Set<String> locations = new HashSet<>();
@@ -81,8 +80,7 @@ public class Day09 extends Challenge {
             y += Integer.signum(diffY);
             x += Integer.signum(diffX);
 
-            String location = x + "," + y;
-            locations.add(location);
+            locations.add(x + "," + y);
         }
     }
 }
