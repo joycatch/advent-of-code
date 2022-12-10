@@ -1,5 +1,6 @@
 package se.phew.aoc.days;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -68,6 +69,12 @@ public class Challenge {
                 System.out.println("[INFO]");
                 return;
             }
+            if (StringUtils.isBlank(SESSION)) {
+                System.out.println("[INFO] Input cannot be fetched when no SESSION set");
+                System.out.println("[INFO] ------------------------");
+                System.out.println("[INFO]");
+                return;
+            }
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.COOKIE, "session=" + SESSION);
@@ -93,7 +100,15 @@ public class Challenge {
     }
 
     protected void print(String info) {
+        print(info);
+        printEmptyLine();
+    }
+
+    protected void printOnly(String info) {
         System.out.println("[INFO] " + info);
+    }
+
+    protected void printEmptyLine() {
         System.out.println("[INFO]");
     }
 }
