@@ -1,6 +1,7 @@
 package se.phew.aoc.days.twenty22;
 
 import se.phew.aoc.days.Challenge;
+import se.phew.aoc.days.utils.MapUtil;
 
 public class Day18 extends Challenge {
 
@@ -9,9 +10,10 @@ public class Day18 extends Challenge {
     int zSize = Integer.MIN_VALUE;
     int[][][] world;
     int[][][] sides;
+    boolean[][][] fill;
 
     public Day18() {
-        super(true);
+        super(false);
 
         for (String line : lines) {
             String[] split = line.split(",");
@@ -33,95 +35,29 @@ public class Day18 extends Challenge {
         for (int z = 0; z < zSize; z++) {
             for (int y = 0; y < ySize; y++) {
                 for (int x = 0; x < xSize; x++) {
-                    int i = neighbourCount(z, y, x);
-                    sides[z][y][x] -= i;
+                    sides[z][y][x] -= neighbourCount(z, y, x);
                     part1 += sides[z][y][x];
                 }
             }
         }
-
         printAnswer(1, part1);
 
         populateWorld();
-
-        printSides();
-        fillAirBubbles();
-        printSides();
+        fill = new boolean[zSize][ySize][xSize];
+        floodFill(world, fill, 0, 0, 0);
+        replace(0, 6);
+        replace(9, 0);
 
         int part2 = 0;
         for (int z = 0; z < zSize; z++) {
             for (int y = 0; y < ySize; y++) {
                 for (int x = 0; x < xSize; x++) {
                     sides[z][y][x] -= neighbourCount(z, y, x);
-                    if (sides[z][y][x] < 0) {
-                        sides[z][y][x] = 0;
-                    }
                     part2 += sides[z][y][x];
                 }
             }
         }
-
         printAnswer(2, part2);
-    }
-
-    private void fillAirBubbles() {
-        for (int z = 0; z < zSize; z++) {
-            for (int y = 0; y < ySize; y++) {
-                for (int x = 0; x < xSize; x++) {
-                    if (isTrapped(z,y,x)) {
-                        world[z][y][x] = 6;
-                        sides[z][y][x] = 6;
-                    }
-                }
-            }
-        }
-    }
-
-    private boolean isTrapped(int zTest, int yTest, int xTest) {
-        /* if (world[zTest][yTest][xTest] != 0) {
-            return false;
-        }*/
-        int trapped = 0;
-        for (int z = zTest - 1; z >= 0; z--) {
-            if (world[z][yTest][xTest] == 6) {
-                trapped++;
-                break;
-            }
-        }
-        for (int z = zTest + 1; z < zSize; z++) {
-            if (world[z][yTest][xTest] == 6) {
-                trapped++;
-                break;
-            }
-        }
-
-        for (int y = yTest - 1; y >= 0; y--) {
-            if (world[zTest][y][xTest] == 6) {
-                trapped++;
-                break;
-            }
-        }
-        for (int y = yTest + 1; y < ySize; y++) {
-            if (world[zTest][y][xTest] == 6) {
-                trapped++;
-                break;
-            }
-        }
-
-        for (int x = xTest - 1; x >= 0; x--) {
-            if (world[zTest][yTest][x] == 6) {
-                trapped++;
-                break;
-            }
-        }
-        for (int x = xTest + 1; x < xSize; x++) {
-            if (world[zTest][yTest][x] == 6) {
-                trapped++;
-                break;
-            }
-        }
-
-        return trapped == 6;
     }
 
     private void populateWorld() {
@@ -137,64 +73,44 @@ public class Day18 extends Challenge {
         }
     }
 
-    private void printWorld() {
-        for (int z = 0; z < zSize; z++) {
-            System.out.println("z=" + z);
-            for (int y = 0; y < ySize; y++) {
-                for (int x = 0; x < xSize; x++) {
-                    if (world[z][y][x] > 0) {
-                        System.out.print(world[z][y][x]);
-                    } else {
-                        System.out.print(".");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println("\n");
-        }
-    }
-
-    private void printSides() {
-        for (int z = 0; z < zSize; z++) {
-            System.out.println("z=" + z);
-            for (int y = 0; y < ySize; y++) {
-                for (int x = 0; x < xSize; x++) {
-                    if (sides[z][y][x] > 0) {
-                        System.out.print(sides[z][y][x]);
-                    } else {
-                        System.out.print(".");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println("\n");
-        }
-    }
-
     private int neighbourCount(int zTest, int yTest, int xTest) {
         if (world[zTest][yTest][xTest] == 0) {
             return 0;
         }
         int count = 0;
-        if (zTest - 1 >= 0) {
-            count += world[zTest - 1][yTest][xTest] > 0 ? 1 : 0;
-        }
-        if (yTest - 1 >= 0) {
-            count += world[zTest][yTest - 1][xTest] > 0 ? 1 : 0;
-        }
-        if (xTest - 1 >= 0) {
-            count += world[zTest][yTest][xTest - 1] > 0 ? 1 : 0;
-        }
-
-        if (zTest + 1 < zSize) {
-            count += world[zTest + 1][yTest][xTest] > 0 ? 1 : 0;
-        }
-        if (yTest + 1 < ySize) {
-            count += world[zTest][yTest + 1][xTest] > 0 ? 1 : 0;
-        }
-        if (xTest + 1 < xSize) {
-            count += world[zTest][yTest][xTest + 1] > 0 ? 1 : 0;
-        }
+        if (zTest - 1 >= 0) {       count += world[zTest - 1][yTest][xTest] > 0 ? 1 : 0; }
+        if (yTest - 1 >= 0) {       count += world[zTest][yTest - 1][xTest] > 0 ? 1 : 0; }
+        if (xTest - 1 >= 0) {       count += world[zTest][yTest][xTest - 1] > 0 ? 1 : 0; }
+        if (zTest + 1 < zSize) {    count += world[zTest + 1][yTest][xTest] > 0 ? 1 : 0; }
+        if (yTest + 1 < ySize) {    count += world[zTest][yTest + 1][xTest] > 0 ? 1 : 0; }
+        if (xTest + 1 < xSize) {    count += world[zTest][yTest][xTest + 1] > 0 ? 1 : 0; }
         return count;
+    }
+
+    void floodFill(int[][][] map, boolean[][][] visited, int z, int y, int x) {
+        if (z < 0 || z >= map.length || y < 0 || y >= map[0].length || x < 0 || x >= map[0][0].length) return;
+        if (visited[z][y][x]) return;
+        visited[z][y][x] = true;
+        if (map[z][y][x] == 6) return;
+        if (map[z][y][x] == 0) map[z][y][x] = 9;
+        floodFill(map, visited,z + 1, y, x);
+        floodFill(map, visited,z - 1, y, x);
+        floodFill(map, visited, z,y + 1, x);
+        floodFill(map, visited, z,y - 1, x);
+        floodFill(map, visited, z, y, x + 1);
+        floodFill(map, visited, z, y, x - 1);
+    }
+
+    private void replace(int value, int replacement) {
+        for (int z = 0; z < zSize; z++) {
+            for (int y = 0; y < ySize; y++) {
+                for (int x = 0; x < xSize; x++) {
+                    if (world[z][y][x] == value) {
+                        world[z][y][x] = replacement;
+                        sides[z][y][x] = replacement;
+                    }
+                }
+            }
+        }
     }
 }
