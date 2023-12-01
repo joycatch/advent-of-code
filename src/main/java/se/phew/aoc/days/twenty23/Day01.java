@@ -7,18 +7,17 @@ import java.util.Map;
 
 public class Day01 extends Challenge {
 
-    static Map<String, Integer> spelledLetters = new HashMap<>();
-
+    static Map<String, Integer> digits = new HashMap<>();
     static {
-        spelledLetters.put("one", 1);
-        spelledLetters.put("two", 2);
-        spelledLetters.put("three", 3);
-        spelledLetters.put("four", 4);
-        spelledLetters.put("five", 5);
-        spelledLetters.put("six", 6);
-        spelledLetters.put("seven", 7);
-        spelledLetters.put("eight", 8);
-        spelledLetters.put("nine", 9);
+        digits.put("one", 1);
+        digits.put("two", 2);
+        digits.put("three", 3);
+        digits.put("four", 4);
+        digits.put("five", 5);
+        digits.put("six", 6);
+        digits.put("seven", 7);
+        digits.put("eight", 8);
+        digits.put("nine", 9);
     }
 
     public Day01() {
@@ -34,7 +33,7 @@ public class Day01 extends Challenge {
                 return Character.getNumericValue(line.charAt(i));
             }
             if (part2) {
-                int value = getSpelledLetterFrom(line.substring(i));
+                int value = getSpelledDigitFrom(line.substring(i));
                 if (value > 0) {
                     return value;
                 }
@@ -43,10 +42,7 @@ public class Day01 extends Challenge {
         return -1;
     }
 
-    private int getSpelledLetterFrom(String line) {
-        return spelledLetters.keySet().stream()
-                .filter(key -> line.startsWith(key))
-                .mapToInt(key -> spelledLetters.get(key))
-                .sum();
+    private int getSpelledDigitFrom(String line) {
+        return digits.keySet().stream().filter(key -> line.startsWith(key)).mapToInt(key -> digits.get(key)).sum();
     }
 }
