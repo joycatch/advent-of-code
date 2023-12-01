@@ -8,6 +8,7 @@ import java.util.Map;
 public class Day01 extends Challenge {
 
     static Map<String, Integer> spelledLetters = new HashMap<>();
+
     static {
         spelledLetters.put("one", 1);
         spelledLetters.put("two", 2);
@@ -23,7 +24,7 @@ public class Day01 extends Challenge {
     public Day01() {
         super(false);
 
-        printAnswer(1, lines.stream().mapToInt(s -> getDigit(s, true, false) * 10 + getDigit(s, false,false)).sum());
+        printAnswer(1, lines.stream().mapToInt(s -> getDigit(s, true, false) * 10 + getDigit(s, false, false)).sum());
         printAnswer(2, lines.stream().mapToInt(s -> getDigit(s, true, true) * 10 + getDigit(s, false, true)).sum());
     }
 
@@ -43,11 +44,9 @@ public class Day01 extends Challenge {
     }
 
     private int getSpelledLetterFrom(String line) {
-        for (String key : spelledLetters.keySet()) {
-            if (line.startsWith(key)) {
-                return spelledLetters.get(key);
-            }
-        }
-        return -1;
+        return spelledLetters.keySet().stream()
+                .filter(key -> line.startsWith(key))
+                .mapToInt(key -> spelledLetters.get(key))
+                .sum();
     }
 }
