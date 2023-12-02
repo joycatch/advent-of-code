@@ -16,10 +16,8 @@ public class Day02 extends Challenge {
             line = line.replaceAll("Game ", "");
             String[] split = line.split(": ");
 
-            Game game = new Game(Integer.parseInt(split[0]), split[1]));
-            if (game.isPart1Possible()) {
-                part1 += game.number;
-            }
+            Game game = new Game(Integer.parseInt(split[0]), split[1]);
+            part1 += game.isPossible() ? game.number : 0;
             part2 += game.power();
         }
 
@@ -39,7 +37,7 @@ class Game {
         }
     }
 
-    public boolean isPart1Possible() {
+    public boolean isPossible() {
         for (Show show : shows) {
             if (show.red > 12 || show.green > 13 || show.blue > 14) {
                 return false;
