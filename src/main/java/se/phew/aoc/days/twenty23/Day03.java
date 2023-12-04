@@ -6,7 +6,6 @@ import java.util.*;
 
 public class Day03 extends Challenge {
 
-    public static final char EMPTY_CHAR = '.';
     private static int[][] offsets = new int[][] { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 }, { 1, -1 }, { 1, 0 }, { 1, 1} };
     char[][] map;
     int rows, columns;
@@ -48,10 +47,6 @@ public class Day03 extends Challenge {
         printAnswer(2, part2);
     }
 
-    private boolean isSymbol(int y, int x) {
-        return map[y][x] != EMPTY_CHAR && !Character.isDigit(map[y][x]);
-    }
-
     private void addNumberAndSymbol(int y, int startX, int endX) {
         Set<Symbol> adjacentSymbols = getAdjacentSymbols(y, startX, endX);
         if (!adjacentSymbols.isEmpty()) {
@@ -83,7 +78,7 @@ public class Day03 extends Challenge {
             if (ix < 0 || ix >= rows || iy < 0 || iy >= columns) {
                 continue;
             }
-            if (map[iy][ix] != EMPTY_CHAR && !Character.isDigit(map[iy][ix])) {
+            if (map[iy][ix] != '.' && !Character.isDigit(map[iy][ix])) {
                 set.add(new Symbol(map[iy][ix], iy, ix));
             }
         }
