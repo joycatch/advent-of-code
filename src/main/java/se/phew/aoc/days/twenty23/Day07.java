@@ -6,15 +6,18 @@ import java.util.*;
 
 public class Day07 extends Challenge {
 
+    static int part;
+
     public Day07() {
         super(false);
 
-        for (int part = 1; part < 3; part++) {
-            List<Hand> hands = new ArrayList<>();
-            for (String line : lines) {
-                String[] split = line.split(" ");
-                hands.add(new Hand(split[0], Long.parseLong(split[1]), part));
-            }
+        List<Hand> hands = new ArrayList<>();
+        for (String line : lines) {
+            String[] split = line.split(" ");
+            hands.add(new Hand(split[0], Integer.parseInt(split[1])));
+        }
+
+        for (part = 1; part <= 2; part++) {
             Collections.sort(hands);
             long result = 0;
             for (int i = 0; i < hands.size(); i++) {
@@ -30,13 +33,11 @@ public class Day07 extends Challenge {
 class Hand implements Comparable<Object> {
 
     String hand;
-    long bid;
-    int part;
+    int bid;
 
-    public Hand(String hand, long bid, int part) {
+    public Hand(String hand, int bid) {
         this.hand = hand;
         this.bid = bid;
-        this.part = part;
     }
 
     public int getType() {
@@ -73,18 +74,31 @@ class Hand implements Comparable<Object> {
         return pairCount;
     }
 
+    public int getBestType() {
+        String candidateCards = "AKQT98765432";
+        int bestType = getType();
+        for (char candidateCard : candidateCards.toCharArray()) {
+            Hand candidateHand = new Hand(this.hand.replaceAll("J", String.valueOf(candidateCard)), this.bid);
+            int candidateType = candidateHand.getType();
+            if (candidateType > bestType) {
+                bestType = candidateType;
+            }
+        }
+        return bestType;
+    }
+
     @Override
     public int compareTo(Object o) {
         Hand other = (Hand) o;
-        int jokerValue = part == 1 ? 11 : 1;
-        if (part == 1 ? getType() == other.getType() : getBestType() == other.getBestType()) {
+        int jokerValue = Day07.part == 1 ? 11 : 1;
+        if (Day07.part == 1 ? getType() == other.getType() : getBestType() == other.getBestType()) {
             for (int i = 0; i < 5; i++) {
                 if (this.hand.charAt(i) != other.hand.charAt(i)) {
                     return getCardValue(this.hand.charAt(i), jokerValue) - getCardValue(other.hand.charAt(i), jokerValue);
                 }
             }
         }
-        return part == 1 ? getType() - other.getType() : getBestType() - other.getBestType() ;
+        return Day07.part == 1 ? getType() - other.getType() : getBestType() - other.getBestType() ;
     }
 
     public int getCardValue(char c, int jokerValue) {
@@ -96,18 +110,5 @@ class Hand implements Comparable<Object> {
             case 'T': return 10;
             default:  return Character.getNumericValue(c);
         }
-    }
-
-    public int getBestType() {
-        String candidateCards = "AKQT98765432";
-        int bestType = getType();
-        for (char candidateCard : candidateCards.toCharArray()) {
-            Hand candidate = new Hand(this.hand.replaceAll("J", String.valueOf(candidateCard)), this.bid, this.part);
-            int candidateType = candidate.getType();
-            if (candidateType > bestType) {
-                bestType = candidateType;
-            }
-        }
-        return bestType;
     }
 }
