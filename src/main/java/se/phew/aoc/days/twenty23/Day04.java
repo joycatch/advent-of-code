@@ -40,6 +40,7 @@ class Card {
     int number;
     List<Integer> winningNumbers = new ArrayList<>();
     List<Integer> numbers = new ArrayList<>();
+    int correctNumbers = -1;
 
     public Card(int number, String input) {
         this.number = number;
@@ -58,6 +59,9 @@ class Card {
     }
 
     public int correctNumbers() {
-        return numbers.stream().filter(n -> winningNumbers.contains(n)).collect(Collectors.toList()).size();
+        if (correctNumbers == -1) {
+            correctNumbers = numbers.stream().filter(n -> winningNumbers.contains(n)).collect(Collectors.toList()).size();
+        }
+        return correctNumbers;
     }
 }
