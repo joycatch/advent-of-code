@@ -24,13 +24,19 @@ public class Day13 extends Challenge {
         }
         patterns.add(pattern);
 
-        int part1 = 0;
+        int part1 = 0, part2 = 0;
         for (Pattern p : patterns) {
-            int h = p.getHorizontalLocation();
-            part1 += h > -1 ? h * 100 : p.getVerticalLocation();
+            int h = p.getHorizontalLocation(true);
+            int v = p.getVerticalLocation(true);
+            part1 += h > -1 ? h * 100 : v;
+
+            h = p.getHorizontalLocation(false);
+            v = p.getVerticalLocation(false);
+            part2 += h > -1 ? h * 100 : v;
         }
 
         printAnswer(1, part1);
+        printAnswer(2, part2);
     }
 }
 
@@ -42,31 +48,48 @@ class Pattern {
         this.lines.add(line);
     }
 
-    public int getHorizontalLocation(List<String> lines) {
+    public int getHorizontalLocation(List<String> lines, boolean part1) {
         int result = -1;
         for (int i = 0; i < lines.size() - 1; i++) {
             boolean isMirror = true;
+            int numberOfSmudges = 0;
             for (int diff = 1; i - diff + 1 >= 0 && i + diff < lines.size(); diff++) {
                 String up = lines.get(i - diff + 1);
                 String down = lines.get(i + diff);
-                if (!up.equals(down)) {
-                    isMirror = false;
-                    break;
+                if (part1) {
+                    if (countDiff(up, down) > 0){
+                        isMirror = false;
+                        break;
+                    }
+                } else {
+                    numberOfSmudges += countDiff(up, down);
+                    if (numberOfSmudges > 1) {
+                        isMirror = false;
+                        break;
+                    }
                 }
             }
-            if (isMirror) {
+            if (part1 && isMirror || !part1 && isMirror && numberOfSmudges == 1) {
                 return i + 1;
             }
         }
         return result;
     }
 
-    public int getHorizontalLocation() {
-        return getHorizontalLocation(this.lines);
+    private static int countDiff(String up, String down) {
+        int diff = 0;
+        for (int i = 0; i < up.length(); i++) {
+            diff += up.charAt(i) == down.charAt(i) ? 0 : 1;
+        }
+        return diff;
     }
 
-    public int getVerticalLocation() {
-        return getHorizontalLocation(rotate());
+    public int getHorizontalLocation(boolean part1) {
+        return getHorizontalLocation(this.lines, part1);
+    }
+
+    public int getVerticalLocation(boolean part1) {
+        return getHorizontalLocation(rotate(), part1);
     }
 
     public List<String> rotate() {
